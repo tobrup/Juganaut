@@ -1,4 +1,10 @@
 package de.glueckstobi.juganaut.bl.worlditems
 
-interface WorldItem {
+sealed interface WorldItem
+
+object Dirt: WorldItem
+
+object EmptyField: WorldItem
+
+class Player: WorldItem {
 }

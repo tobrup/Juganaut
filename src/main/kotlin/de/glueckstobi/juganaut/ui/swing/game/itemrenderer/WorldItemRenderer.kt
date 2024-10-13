@@ -1,7 +1,7 @@
 package de.glueckstobi.juganaut.ui.swing.game.itemrenderer
 
 import de.glueckstobi.juganaut.bl.worlditems.Dirt
-import de.glueckstobi.juganaut.bl.worlditems.EmptyItem
+import de.glueckstobi.juganaut.bl.worlditems.EmptyField
 import de.glueckstobi.juganaut.bl.worlditems.Player
 import de.glueckstobi.juganaut.bl.worlditems.WorldItem
 import de.glueckstobi.juganaut.ui.swing.game.WorldRenderer
@@ -17,8 +17,7 @@ interface WorldItemRenderer {
             return when (item) {
                 is Player -> StaticImageRenderer
                 Dirt -> StaticImageRenderer
-                EmptyItem -> null
-                else -> null
+                EmptyField -> null
             }
         }
     }

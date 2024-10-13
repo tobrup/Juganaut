@@ -13,6 +13,6 @@ fun main(args: Array<String>) {
 
 private fun createGame(): Game {
     val world = World(50, 50)
-    world.setField(Coord(25, 25), Player())
+    world.setField(Coord(10, 10), Player())
     return Game(world)
 }
