@@ -1,16 +1,31 @@
 package de.glueckstobi.juganaut.ui.swing.game
 
 import de.glueckstobi.juganaut.bl.Game
+import de.glueckstobi.juganaut.bl.logic.Pause
+import de.glueckstobi.juganaut.bl.logic.PlayerInput
+import de.glueckstobi.juganaut.bl.logic.PlayerMovement
 import de.glueckstobi.juganaut.bl.space.Direction
 import java.awt.event.KeyEvent
 
 class UserInputController(val game: Game) {
 
     fun onKeyPress(e: KeyEvent) {
-        val direction = getDirection(e)
-        direction?.let {
-            movePlayer(direction)
+        val input = getPlayerInput(e)
+        input?.let {
+            game.turnController.setPlayerInput(input)
         }
+    }
+
+    fun onKeyRelease(e: KeyEvent) {
+        // do nothing
+    }
+
+    private fun getPlayerInput(e: KeyEvent): PlayerInput? {
+        return getMoveInput(e) ?: getSpecialInput(e)
+    }
+
+    private fun getMoveInput(e: KeyEvent): PlayerMovement? {
+        return getDirection(e)?.let { PlayerMovement(it) }
     }
 
     private fun getDirection(e: KeyEvent): Direction? {
@@ -29,12 +44,10 @@ class UserInputController(val game: Game) {
         }
     }
 
-    fun onKeyRelease(e: KeyEvent) {
-
+    private fun getSpecialInput(e: KeyEvent): PlayerInput? {
+        return when (e.keyCode) {
+            KeyEvent.VK_SPACE -> Pause
+            else -> null
+        }
     }
-
-    private fun movePlayer(direction: Direction) {
-        game.world.playerCoord = game.world.playerCoord.move(direction)
-    }
-
 }

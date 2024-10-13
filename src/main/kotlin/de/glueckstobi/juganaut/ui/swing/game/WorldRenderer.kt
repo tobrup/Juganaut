@@ -4,6 +4,7 @@ import de.glueckstobi.juganaut.bl.World
 import de.glueckstobi.juganaut.bl.space.Coord
 import de.glueckstobi.juganaut.bl.worlditems.WorldItem
 import de.glueckstobi.juganaut.ui.swing.game.itemrenderer.WorldItemRenderer
+import java.awt.Color
 import java.awt.Graphics
 import javax.swing.JPanel
 
@@ -13,7 +14,7 @@ class WorldRenderer(val world: World): JPanel() {
         /**
          * Größe eines Feldes auf dem Bildschirm
          */
-        val fieldRenderSize = 10
+        val fieldRenderSize = 30
     }
 
     override fun paintComponent(g: Graphics) {
@@ -22,12 +23,19 @@ class WorldRenderer(val world: World): JPanel() {
     }
 
     private fun renderWorld(g: Graphics) {
+        renderBackground(g)
         (0 until world.height).forEach { y ->
             (0 until world.width).forEach { x ->
-                val item = world.getItem(Coord(x, y))
+                val item = world.getField(Coord(x, y))
                 renderItem(item, x, y, g)
             }
         }
+    }
+
+    private fun renderBackground(g: Graphics) {
+        g.color = Color.black
+        val bounds = g.clipBounds
+        g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height)
     }
 
     private fun renderItem(item: WorldItem, x: Int, y: Int, g: Graphics) {
@@ -35,8 +43,7 @@ class WorldRenderer(val world: World): JPanel() {
         renderer?.let {
             val renderX = x * fieldRenderSize
             val renderY = y * fieldRenderSize
-            it.renderItem(item, renderX, renderY, fieldRenderSize, fieldRenderSize, g)
+            it.renderItem(item, renderX, renderY, fieldRenderSize, fieldRenderSize, g, this)
         }
-
     }
 }
