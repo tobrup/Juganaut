@@ -11,14 +11,19 @@ class TurnController(val game: Game) {
 
     private var playerInput: PlayerInput? = null
     private var playerInputPressed = false
+    private var playerInputProcessed = false
 
     fun playerInputPressed(input: PlayerInput) {
         playerInput = input
         playerInputPressed = true
+        playerInputProcessed = false
     }
 
     fun playerInputReleased() {
         playerInputPressed = false
+        if (playerInputProcessed) {
+            playerInput = null
+        }
     }
 
 
@@ -36,6 +41,7 @@ class TurnController(val game: Game) {
         if (!playerInputPressed) {
             playerInput = null
         }
+        playerInputProcessed = true
         when (currentInput) {
             is PlayerMovement -> tryMovePlayer(currentInput.direction)
         }
