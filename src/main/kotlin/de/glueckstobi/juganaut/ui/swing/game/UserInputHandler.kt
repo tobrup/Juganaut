@@ -6,17 +6,17 @@ import de.glueckstobi.juganaut.bl.logic.PlayerMovement
 import de.glueckstobi.juganaut.bl.space.Direction
 import java.awt.event.KeyEvent
 
-class UserInputController(val game: Game) {
+class UserInputHandler(val game: Game) {
 
     fun onKeyPress(e: KeyEvent) {
         val input = getPlayerInput(e)
         input?.let {
-            game.turnController.playerInputPressed(input)
+            game.turnController.playerTurnController.playerInputPressed(input)
         }
     }
 
     fun onKeyRelease(e: KeyEvent) {
-        game.turnController.playerInputReleased()
+        game.turnController.playerTurnController.playerInputReleased()
     }
 
     private fun getPlayerInput(e: KeyEvent): PlayerInput? {

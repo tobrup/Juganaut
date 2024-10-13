@@ -6,5 +6,6 @@ object Dirt: WorldItem
 
 object EmptyField: WorldItem
 
-class Player: WorldItem {
-}
+class Player: WorldItem
+
+class Rock(var falling: Boolean = false): WorldItem

@@ -1,9 +1,7 @@
 package de.glueckstobi.juganaut.ui.swing.game.itemrenderer
 
+import de.glueckstobi.juganaut.bl.worlditems.*
 import de.glueckstobi.juganaut.bl.worlditems.Dirt
-import de.glueckstobi.juganaut.bl.worlditems.EmptyField
-import de.glueckstobi.juganaut.bl.worlditems.Player
-import de.glueckstobi.juganaut.bl.worlditems.WorldItem
 import de.glueckstobi.juganaut.ui.swing.game.WorldRenderer
 import java.awt.Graphics
 import java.awt.Image
@@ -13,6 +11,7 @@ object StaticImageRenderer: WorldItemRenderer {
 
     private val playerImage = loadImage("/doggy.png")
     private val dirtImage = loadImage("/dirt.png")
+    private val rockImage = loadImage("/rock.png")
 
     private fun loadImage(filename: String): Image {
         val rawImage = ImageIcon(javaClass.getResource(filename)).image
@@ -38,6 +37,7 @@ object StaticImageRenderer: WorldItemRenderer {
     private fun getImage(item: WorldItem): Image? {
         return when (item) {
             is Player -> playerImage
+            is Rock -> rockImage
             Dirt -> dirtImage
             EmptyField -> null
         }

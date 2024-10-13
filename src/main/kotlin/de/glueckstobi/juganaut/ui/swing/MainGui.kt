@@ -1,7 +1,7 @@
 package de.glueckstobi.juganaut.ui.swing
 
 import de.glueckstobi.juganaut.bl.Game
-import de.glueckstobi.juganaut.ui.swing.game.UserInputController
+import de.glueckstobi.juganaut.ui.swing.game.UserInputHandler
 import de.glueckstobi.juganaut.ui.swing.game.WorldRenderer
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
@@ -34,7 +34,7 @@ class MainGui {
     }
 
     private fun initializeUserInputController(game: Game) {
-        val inputController = UserInputController(game)
+        val inputController = UserInputHandler(game)
         window.contentPane.requestFocus()
         window.contentPane.addKeyListener(object: KeyAdapter() {
             override fun keyPressed(e: KeyEvent) {

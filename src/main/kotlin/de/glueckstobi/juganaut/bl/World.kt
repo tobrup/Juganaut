@@ -8,8 +8,10 @@ class World(val width: Int, val height: Int) {
 
     private val fields: Array<Array<WorldItem>> = Array(height) { Array(width) { Dirt } }
 
+    val validXRange = 0 until width
+    val validYRange = 0 until height
     fun isValid(c: Coord): Boolean {
-        return (c.x in (0 until width)) && (c.y in (0 until height))
+        return (c.x in validXRange) && (c.y in validYRange)
     }
 
     fun getField(c: Coord): WorldItem {
