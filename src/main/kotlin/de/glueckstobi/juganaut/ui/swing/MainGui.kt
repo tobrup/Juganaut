@@ -3,13 +3,14 @@ package de.glueckstobi.juganaut.ui.swing
 import de.glueckstobi.juganaut.bl.Game
 import de.glueckstobi.juganaut.ui.swing.game.UserInputHandler
 import de.glueckstobi.juganaut.ui.swing.game.WorldRenderer
+import java.awt.BorderLayout
+import java.awt.Color
+import java.awt.Font
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
-import javax.swing.JFrame
-import javax.swing.SwingUtilities
-import javax.swing.WindowConstants
+import javax.swing.*
 
 
 /**
@@ -59,6 +60,8 @@ class MainGui {
      */
     private val window: JFrame = JFrame("Juganaut")
 
+    private val statusLabel: JLabel = JLabel(" ")
+
     /**
      * Hört auf Tasten-Drücke und gibt es an den [inputController] weiter.
      */
@@ -101,6 +104,17 @@ class MainGui {
     private fun tickRenderCycle(game: Game) {
         game.turnController.tick()
         window.repaint()
+        updateStatus(game)
+    }
+
+    private fun updateStatus(game: Game) {
+        if (game.gameOverReason != null) {
+            statusLabel.foreground = Color.RED
+            statusLabel.text = "GAME OVER"
+        }else {
+            statusLabel.foreground = Color.BLACK
+            statusLabel.text = "Viel Spaß!"
+        }
     }
 
 
@@ -108,7 +122,12 @@ class MainGui {
      * Baut das Fenster auf und zeigt es an.
      */
     private fun showWindow(renderer: WorldRenderer) {
-        window.contentPane = renderer
+        val contentPane = JPanel(BorderLayout())
+        contentPane.add(statusLabel, BorderLayout.NORTH)
+        contentPane.add(renderer, BorderLayout.CENTER)
+        statusLabel.font = Font("Sans-Serif", Font.PLAIN, 30)
+        window.contentPane = contentPane
+
         window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE)
         window.setSize(1024, 800)
 
