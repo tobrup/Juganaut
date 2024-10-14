@@ -7,6 +7,9 @@ import java.awt.Graphics
 import java.awt.Image
 import javax.swing.ImageIcon
 
+/**
+ * Zeichnet ein Spiel als statisches Bild auf dem Bildschirm.
+ */
 object StaticImageRenderer: WorldItemRenderer {
 
     private val playerImage = loadImage("/doggy.png")
@@ -14,12 +17,18 @@ object StaticImageRenderer: WorldItemRenderer {
     private val rockImage = loadImage("/rock.png")
     private val monsterImage = loadImage("/monster.png")
 
+    /**
+     * Lädt das Bild mit dem angengen Datei-Namen.
+     */
     private fun loadImage(filename: String): Image {
         val rawImage = ImageIcon(javaClass.getResource(filename)).image
         val scaledImage = rawImage.getScaledInstance(WorldRenderer.fieldRenderSize, WorldRenderer.fieldRenderSize, 0)
         return scaledImage
     }
 
+    /**
+     * Malt das angegeben Element auf den Bildschirm, wenn möglich.
+     */
     override fun renderItem(
         item: WorldItem,
         renderX: Int,
@@ -35,6 +44,10 @@ object StaticImageRenderer: WorldItemRenderer {
         }
     }
 
+    /**
+     * Gibt das richtige Bild für das angegebene Spiel-Element zurück.
+     * Wenn es kein Bild dafür gibt, wird null zurückgegeben.
+     */
     private fun getImage(item: WorldItem): Image? {
         return when (item) {
             is Player -> playerImage

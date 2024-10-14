@@ -8,6 +8,9 @@ import java.awt.Color
 import java.awt.Graphics
 import javax.swing.JPanel
 
+/**
+ * Malt das ganze Spielfeld auf den Bildschirm.
+ */
 class WorldRenderer(val world: World): JPanel() {
 
     companion object {
@@ -17,27 +20,44 @@ class WorldRenderer(val world: World): JPanel() {
         val fieldRenderSize = 30
     }
 
+    /**
+     * Wird jedes Mal aufgerufen, wenn das Spielfeld neu gemalt werden soll.
+     */
     override fun paintComponent(g: Graphics) {
         super.paintComponent(g)
         renderWorld(g)
     }
 
+    /**
+     * Malt das Spielfeld.
+     * @param g Graphic-Objekt, das zum malen benutzt werden kann.
+     */
     private fun renderWorld(g: Graphics) {
         renderBackground(g)
-        (0 until world.height).forEach { y ->
-            (0 until world.width).forEach { x ->
+        world.validYRange.forEach { y ->
+            world.validXRange.forEach { x ->
                 val item = world.getField(Coord(x, y))
                 renderItem(item, x, y, g)
             }
         }
     }
 
+    /**
+     * Malt den Hintergrund.
+     */
     private fun renderBackground(g: Graphics) {
         g.color = Color.black
         val bounds = g.clipBounds
         g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height)
     }
 
+    /**
+     * Malt ein einzelnes Spiel-Element.
+     * @param item das Spiel-Element, das gemalt werden soll
+     * @param x die X-Koordinate (horizontal), an der gemalt werden soll.
+     * @param y die Y-Koordinate (vertikal), an der gemalt werden soll.
+     * @param g Graphic-Objekt, das zum malen benutzt werden kann
+     */
     private fun renderItem(item: WorldItem, x: Int, y: Int, g: Graphics) {
         val renderer = WorldItemRenderer.getRendererForItem(item)
         renderer?.let {

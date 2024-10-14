@@ -5,15 +5,28 @@ import de.glueckstobi.juganaut.bl.space.Coord
 import de.glueckstobi.juganaut.bl.space.Direction
 import de.glueckstobi.juganaut.bl.worlditems.*
 
-class MonsterMoveController(val game: Game) {
+/**
+ * Steuert die Bewegungen der Monster
+ */
+class MonsterController(val game: Game) {
+
+    /**
+     * Bewegt jedes Monster ein Feld weiter.
+     * Wird einmal pro Runde aufgerufen.
+     */
     fun monstersMove() {
         val monsters = game.world.findAll { it is Monster }
+        // move the monster in random order
         val shuffledMonsters = monsters.shuffled()
         shuffledMonsters.forEach {
             tryMove(it)
         }
     }
 
+    /**
+     * Bewegt das Feld an der angegeben Koordinate weiter.
+     * @param source Coordinate an der ein Monster ist.
+     */
     private fun tryMove(source: Coord) {
         val item = game.world.getField(source)
         if (item !is Monster) {
@@ -32,6 +45,9 @@ class MonsterMoveController(val game: Game) {
         }
     }
 
+    /**
+     * Gibt true zurück, wenn das Monster auf das angegebene Feld laufen kann
+     */
     private fun canMove(destination: Coord): Boolean {
         if (!game.world.isValid(destination)) {
             return false
@@ -43,20 +59,43 @@ class MonsterMoveController(val game: Game) {
         }
     }
 
-    private fun catchPlayer(item: Monster, source: Coord, destination: Coord) {
-        move(item, source, destination)
+    /**
+     * Das Monster fängt den Spieler.
+     * @param monster das Monster
+     * @param source die Koordinaten des Monster
+     * @param destination die Koordinaten des Spielers
+     */
+    private fun catchPlayer(monster: Monster, source: Coord, destination: Coord) {
+        move(monster, source, destination)
         game.gameOver(MonsterCatchesPlayer(source, destination))
     }
 
-    private fun move(item: Monster, source: Coord, destination: Coord) {
+    /**
+     * Bewegt das Monster auf das angegebene Feld.
+     * @param monster das Monster
+     * @param source die Ursprungs-Koordinate
+     * @param destination die Ziel-Koordinate
+     */
+    private fun move(monster: Monster, source: Coord, destination: Coord) {
         game.world.setField(source, EmptyField)
-        game.world.setField(destination, item)
+        game.world.setField(destination, monster)
     }
 
-    private fun turn(item: Monster, c: Coord) {
-        item.direction = getNewDirection(item, c)
+    /**
+     * Das Monster dreht sich und ändert seine Richtung.
+     * @param monster das Monster
+     * @param c the Koordinate des Monsters
+     */
+    private fun turn(monster: Monster, c: Coord) {
+        monster.direction = getNewDirection(monster, c)
     }
 
+    /**
+     * Berechnet die neue Richtung, wenn das Monster sich dreht.
+     * @param monster das Monster
+     * @param source die Koordinate des Monsters
+     * @return Gibt die neue Richtung des Monsters zurück.
+     */
     private fun getNewDirection(monster: Monster, source: Coord): Direction {
         var nextDirection = Direction.random()
         (0..4).forEach {

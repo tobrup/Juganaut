@@ -6,11 +6,16 @@ import de.glueckstobi.juganaut.ui.swing.game.WorldRenderer
 import java.awt.Graphics
 
 /**
- * Ein Renderer, der ein WorldItem malen kann.
+ * Die Schnittstelle für ein Objekt, das ein Spiel-Element auf den Bildschirm malen kann.
  */
 interface WorldItemRenderer {
 
     companion object {
+
+        /**
+         * Gibt den richtigen Renderer für das angegebene Spiel-Element zurück.
+         * Wenn es keinen Renderer gibt, wird null zurückgegeben.
+         */
         fun getRendererForItem(item: WorldItem): WorldItemRenderer? {
             return when (item) {
                 is Player -> StaticImageRenderer
@@ -22,6 +27,17 @@ interface WorldItemRenderer {
         }
     }
 
+    /**
+     * Malt das Spiel-Element auf den Bildschirm.
+     * @param item das Spiel-Element, das gemalt werden soll
+     * @param renderX die X-Koordinate (horizontal) im Fenster, an der das Element gemalt werden soll
+     * @param renderY die Y-Koordinate (vertikal) im Fenster, an der das Element gemalt werden soll
+     * @param renderWidth die Breite, in der Spiel-Element gemalt werden soll
+     * @param renderHeight die Höhe, in der Spiel-Element gemalt werden soll
+     * @param g ein Graphics-Objekt, das zum malen verwendet werden kann
+     * @param worldRenderer der WorldRenderer selbst (bietet Funktionen, um Bilder zu malen)
+     *
+     */
     fun renderItem(
         item: WorldItem,
         renderX: Int,
