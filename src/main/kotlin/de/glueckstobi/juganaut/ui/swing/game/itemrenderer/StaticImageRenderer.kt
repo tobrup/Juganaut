@@ -12,6 +12,7 @@ object StaticImageRenderer: WorldItemRenderer {
     private val playerImage = loadImage("/doggy.png")
     private val dirtImage = loadImage("/dirt.png")
     private val rockImage = loadImage("/rock.png")
+    private val monsterImage = loadImage("/monster.png")
 
     private fun loadImage(filename: String): Image {
         val rawImage = ImageIcon(javaClass.getResource(filename)).image
@@ -38,6 +39,7 @@ object StaticImageRenderer: WorldItemRenderer {
         return when (item) {
             is Player -> playerImage
             is Rock -> rockImage
+            is Monster -> monsterImage
             Dirt -> dirtImage
             EmptyField -> null
         }

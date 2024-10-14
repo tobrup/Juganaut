@@ -7,18 +7,20 @@ import de.glueckstobi.juganaut.bl.worlditems.*
 
 class RockTurnController(val game: Game) {
     fun rocksFall() {
-        // start at bottom of world!
-        game.world.validYRange.sortedDescending().forEach { y ->
-            game.world.validXRange.forEach { x ->
-                tryFall(Coord(x, y))
-            }
+        val rocks = game.world.findAll { it is Rock }
+        // sort rocks, so we start at bottom of world
+        val sortedRocks = rocks.sortedWith { c1, c2 ->
+            (c1.y - c2.y).takeIf { it != 0 } ?: (c1.x - c2.x)
+        }
+        sortedRocks.forEach {
+            tryFall(it)
         }
     }
 
     private fun tryFall(source: Coord) {
         val item = game.world.getField(source)
         if (item !is Rock) {
-            return
+            return // should not happen
         }
         val destination = source.move(Direction.Down)
         if (!game.world.isValid(destination)) {
@@ -28,7 +30,7 @@ class RockTurnController(val game: Game) {
         when (itemBelow) {
             EmptyField -> fall(item, source, destination)
             is Rock, Dirt -> stopFalling(item)
-            is Player -> tryHitPlayer(item, source, destination)
+            is Player, is Monster -> tryHit(item, source, destination, itemBelow)
         }
     }
 
@@ -42,13 +44,15 @@ class RockTurnController(val game: Game) {
         rock.falling = false
     }
 
-    private fun tryHitPlayer(rock: Rock, source: Coord, destination: Coord) {
+    private fun tryHit(rock: Rock, source: Coord, destination: Coord, targetItem: WorldItem) {
         if (rock.falling) {
-            // oh, oh, player is hit by rock
+            // oh, oh, player or monster is hit by rock
             fall(rock, source, destination)
-            game.gameOver(RockHitsPlayer(source, destination))
+            if (targetItem is Player) {
+                game.gameOver(RockHitsPlayer(source, destination))
+            }
         }
-        // otherwise it's ok, rock is just laying on players head
+        // otherwise it's ok, rock is just laying on the head
     }
 
 }

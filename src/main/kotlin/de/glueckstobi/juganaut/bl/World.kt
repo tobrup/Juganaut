@@ -32,11 +32,16 @@ class World(val width: Int, val height: Int) {
     }
 
     fun find(condition: (WorldItem) -> Boolean): Coord? {
+        return findAll(condition).firstOrNull()
+    }
+
+    fun findAll(condition: (WorldItem) -> Boolean): List<Coord> {
+        val result = mutableListOf<Coord>()
         forEach { c ->
             if (condition(getField(c))) {
-                return c
+                result.add(c)
             }
         }
-        return null
+        return result
     }
 }

@@ -3,10 +3,7 @@ package de.glueckstobi.juganaut.bl.logic
 import de.glueckstobi.juganaut.bl.Game
 import de.glueckstobi.juganaut.bl.space.Coord
 import de.glueckstobi.juganaut.bl.space.Direction
-import de.glueckstobi.juganaut.bl.worlditems.Dirt
-import de.glueckstobi.juganaut.bl.worlditems.EmptyField
-import de.glueckstobi.juganaut.bl.worlditems.Player
-import de.glueckstobi.juganaut.bl.worlditems.Rock
+import de.glueckstobi.juganaut.bl.worlditems.*
 
 class PlayerTurnController(val game: Game) {
 
@@ -57,6 +54,7 @@ class PlayerTurnController(val game: Game) {
             EmptyField, Dirt -> movePlayer(source, destination)
             is Rock -> {}
             is Player -> {} // player moves to itself? should not happen
+            is Monster -> game.gameOver(PlayerWalksIntoMonster(source, destination))
         }
     }
 

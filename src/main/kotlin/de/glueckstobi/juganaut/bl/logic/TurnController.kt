@@ -6,11 +6,12 @@ class TurnController(val game: Game) {
 
     val playerTurnController = PlayerTurnController(game)
     val rockTurnController = RockTurnController(game)
+    val monsterController = MonsterMoveController(game)
 
     fun tick() {
         playerTurnController.applyPlayerInput()
         rockTurnController.rocksFall()
-//        monstersMove()
+        monsterController.monstersMove()
     }
 
 
