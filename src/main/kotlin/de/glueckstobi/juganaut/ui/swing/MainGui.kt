@@ -28,7 +28,7 @@ class MainGui {
     /**
      * Die Uhr, die regelmäßig eine Spiel-Runde ausführt und das Ergebnis anzeigt.
      */
-    inner class RenderCycle(val game: Game): Runnable {
+    inner class RenderCycle(val game: Game) : Runnable {
 
         /**
          * True, wenn die Spiel-Uhr nicht weiterlaufen soll (weil das Spiel beendet ist)
@@ -111,7 +111,7 @@ class MainGui {
         if (game.gameOverReason != null) {
             statusLabel.foreground = Color.RED
             statusLabel.text = "GAME OVER"
-        }else {
+        } else {
             statusLabel.foreground = Color.BLACK
             statusLabel.text = "Viel Spaß!"
         }

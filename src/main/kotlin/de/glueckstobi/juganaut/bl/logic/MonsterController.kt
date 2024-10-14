@@ -3,7 +3,9 @@ package de.glueckstobi.juganaut.bl.logic
 import de.glueckstobi.juganaut.bl.Game
 import de.glueckstobi.juganaut.bl.space.Coord
 import de.glueckstobi.juganaut.bl.space.Direction
-import de.glueckstobi.juganaut.bl.worlditems.*
+import de.glueckstobi.juganaut.bl.worlditems.EmptyField
+import de.glueckstobi.juganaut.bl.worlditems.Monster
+import de.glueckstobi.juganaut.bl.worlditems.Player
 
 /**
  * Steuert die Bewegungen der Monster

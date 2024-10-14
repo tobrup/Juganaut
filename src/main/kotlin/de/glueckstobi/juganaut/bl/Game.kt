@@ -2,7 +2,6 @@ package de.glueckstobi.juganaut.bl
 
 import de.glueckstobi.juganaut.bl.logic.GameOverReason
 import de.glueckstobi.juganaut.bl.logic.TurnController
-import de.glueckstobi.juganaut.bl.worlditems.WorldItem
 
 /**
  * Beschreibt das Spiel mit allen Daten und der Spiel-Logik.

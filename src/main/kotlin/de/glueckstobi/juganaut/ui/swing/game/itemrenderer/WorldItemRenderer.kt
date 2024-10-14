@@ -1,7 +1,6 @@
 package de.glueckstobi.juganaut.ui.swing.game.itemrenderer
 
 import de.glueckstobi.juganaut.bl.worlditems.*
-import de.glueckstobi.juganaut.bl.worlditems.EmptyField
 import de.glueckstobi.juganaut.ui.swing.game.WorldRenderer
 import java.awt.Graphics
 

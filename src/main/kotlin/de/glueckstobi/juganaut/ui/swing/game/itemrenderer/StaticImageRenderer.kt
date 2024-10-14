@@ -1,7 +1,6 @@
 package de.glueckstobi.juganaut.ui.swing.game.itemrenderer
 
 import de.glueckstobi.juganaut.bl.worlditems.*
-import de.glueckstobi.juganaut.bl.worlditems.Dirt
 import de.glueckstobi.juganaut.ui.swing.game.WorldRenderer
 import java.awt.Graphics
 import java.awt.Image
@@ -10,7 +9,7 @@ import javax.swing.ImageIcon
 /**
  * Zeichnet ein Spiel als statisches Bild auf dem Bildschirm.
  */
-object StaticImageRenderer: WorldItemRenderer {
+object StaticImageRenderer : WorldItemRenderer {
 
     private val playerImage = loadImage("/doggy.png")
     private val dirtImage = loadImage("/dirt.png")

@@ -11,7 +11,7 @@ import javax.swing.JPanel
 /**
  * Malt das ganze Spielfeld auf den Bildschirm.
  */
-class WorldRenderer(val world: World): JPanel() {
+class WorldRenderer(val world: World) : JPanel() {
 
     companion object {
         /**

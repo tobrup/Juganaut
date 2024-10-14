@@ -10,14 +10,14 @@ sealed interface GameOverReason
 /**
  * Spieler wird von Stein getroffen
  */
-class RockHitsPlayer(rockCoord: Coord, playerCoord: Coord): GameOverReason
+class RockHitsPlayer(rockCoord: Coord, playerCoord: Coord) : GameOverReason
 
 /**
  * Spieler läuft in ein Monster
  */
-class PlayerWalksIntoMonster(playerCoord: Coord, monsterCoord: Coord): GameOverReason
+class PlayerWalksIntoMonster(playerCoord: Coord, monsterCoord: Coord) : GameOverReason
 
 /**
  * Monster erwischt den Spieler
  */
-class MonsterCatchesPlayer(monsterCoord: Coord, playerCoord: Coord): GameOverReason
+class MonsterCatchesPlayer(monsterCoord: Coord, playerCoord: Coord) : GameOverReason
