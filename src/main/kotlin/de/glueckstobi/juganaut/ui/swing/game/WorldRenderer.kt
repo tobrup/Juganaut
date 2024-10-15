@@ -17,7 +17,7 @@ class WorldRenderer(val world: World) : JPanel() {
         /**
          * Größe eines Feldes auf dem Bildschirm
          */
-        val fieldRenderSize = 30
+        val fieldRenderSize = 45
     }
 
     /**

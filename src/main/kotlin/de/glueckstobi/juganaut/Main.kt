@@ -17,9 +17,9 @@ fun main(args: Array<String>) {
 }
 
 private fun createGame(): Game {
-    val world = World(50, 50)
-    createItems(world, (20..100)) { Rock() }
-    createItems(world, (20..100)) { Monster() }
+    val world = World(20, 20)
+    createItems(world, (20..50)) { Rock() }
+    createItems(world, (20..50)) { Monster() }
     world.setField(Coord(10, 10), Player())
     return Game(world)
 }
