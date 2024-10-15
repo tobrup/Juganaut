@@ -27,6 +27,30 @@ Ich empfehle zum Programmieren IntelliJ IDEA Community Edition: https://www.jetb
 
 Um eine Programmier-Umgebung mit diesem Spiel einzurichten:
 * Clonen dieses Repositories: `git clone https://github.com/tobrup/Juganaut.git`
-    * Dadurch sollte der das Spiel mit Programm-Code auf der Festplatte gespeichert werden
+    * Dadurch sollte das Repository, d.h. der Programm-Code des Spiels, auf der Festplatte gespeichert werden.
 * Importieren in IntelliJ über: File -> Open -> Verzeichnis mit dem lokalen Repository auswählen
-* Starten des Spiels in IntelliJ: Run -> Run "MainKt" oder einfach den entsprechenden Button in der Toolbar
+* Starten des Spiels in IntelliJ: Run -> Run "MainKt" oder einfach über den entsprechenden Button in der Toolbar
+
+## Aufbau des Projekts
+
+Der Programm-Code ist ganz grob in zwei Teile aufgeteilt:
+
+* BL (in `src/main/kotlin/de/glueckstobi/juganaut/bl`): Business Logic
+  * Enthält die gesamte Logik des Spiels mit allen Regeln, möglichen Spiel-Elementen mit ihren Bewegungen etc. 
+* UI (in `src/main/kotlin/de/glueckstobi/juganaut/ui/swing`): User Interface
+  * Enthält die gesamte graphische Benutzer-Oberfläche. Hier wird alles gerendert, d.h. auf den Bilschirm angezeigt.
+* Resourcen (in `src/main/resources`)
+  * Enthält Bilder, die für die Anzeige im Spiel benutzt werden 
+
+## Wie gehts weiter?
+
+Das Spiel könnte ein paar neue Features vertragen:
+
+* Wäre gut, wenn der Spieler einen Stein verschieben könnte (falls im Feld dahinter Platz ist).
+Das ist reiner Teil der Spiel-Logik, kann also vollständig in der BL programmiert werden.
+
+* Man könnte noch Diamanten als neue Spiel-Elemente einführen, die der Spieler aufsammeln muss.
+Die Spiel-Elemente sind in `WorldItem.kt` definiert. Zusätzlich braucht man noch einen Renderer für die Anzeige (`WorldItemRenderer.kt`)
+und die entsprechende Logik in der BL, evtl auch eine Anzeige im Status-Label in `MainGui.kt`
+
+* Wie wär's mit Bomben, die der Benutzer anzünden kann (z.B. mit `Enter`) und die dann nach 3 Runden explodieren?
