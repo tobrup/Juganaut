@@ -17,7 +17,7 @@ object StaticImageRenderer : WorldItemRenderer {
     private val monsterImage = loadImage("/monster.png")
 
     /**
-     * Lädt das Bild mit dem angengen Datei-Namen.
+     * Lädt das Bild mit dem angegebenen Datei-Namen.
      */
     private fun loadImage(filename: String): Image {
         val rawImage = ImageIcon(javaClass.getResource(filename)).image
@@ -26,7 +26,7 @@ object StaticImageRenderer : WorldItemRenderer {
     }
 
     /**
-     * Malt das angegeben Element auf den Bildschirm, wenn möglich.
+     * Malt das angegebene Element auf den Bildschirm, wenn möglich.
      */
     override fun renderItem(
         item: WorldItem,

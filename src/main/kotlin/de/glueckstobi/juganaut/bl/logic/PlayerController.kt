@@ -105,7 +105,7 @@ class PlayerController(val game: Game) {
     }
 
     /**
-     * Bewegt den Spieler auf das Feld eines Monster
+     * Bewegt den Spieler auf das Feld eines Monsters
      * @param source Ursprungs-Koordinate
      * @param destination Ziel-Koordinate
      */

@@ -28,6 +28,7 @@ enum class Direction {
      */
     Right;
 
+
     companion object {
 
         /**
