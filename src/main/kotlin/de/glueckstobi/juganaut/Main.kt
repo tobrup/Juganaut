@@ -8,21 +8,14 @@ import de.glueckstobi.juganaut.bl.worlditems.Player
 import de.glueckstobi.juganaut.bl.worlditems.Rock
 import de.glueckstobi.juganaut.bl.worlditems.WorldItem
 import de.glueckstobi.juganaut.ui.swing.MainGui
-import de.glueckstobi.juganaut.ui.swing.game.UserInputHandler
-import java.awt.event.KeyAdapter
-import java.awt.event.KeyEvent
 import kotlin.random.Random
 import kotlin.random.nextInt
 
 
 fun main(args: Array<String>) {
-    while (true) {
         val game = createGame()
         MainGui().startPlaying(game)
-        while (true) {
 
-        }
-    }
 }
 
 private fun createGame(): Game {
