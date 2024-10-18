@@ -1,6 +1,7 @@
 package de.glueckstobi.juganaut.bl.logic
 
 import de.glueckstobi.juganaut.bl.Game
+import de.glueckstobi.juganaut.bl.space.Action
 import de.glueckstobi.juganaut.bl.space.Coord
 import de.glueckstobi.juganaut.bl.space.Direction
 import de.glueckstobi.juganaut.bl.worlditems.*
@@ -38,7 +39,7 @@ class PlayerController(val game: Game) {
     }
 
     /**
-     * Wird gedrückt, wenn der Spieler die Taste wieder loslässt.
+     * Wird aufgerufen, wenn der Spieler die Taste wieder loslässt.
      */
     fun playerInputReleased() {
         playerInputPressed = false
@@ -66,6 +67,7 @@ class PlayerController(val game: Game) {
         playerInputProcessed = true
         when (currentInput) {
             is PlayerMovement -> tryMovePlayer(currentInput.direction)
+            is PlayerActions -> processAction(currentInput.action)
         }
     }
 
@@ -90,6 +92,13 @@ class PlayerController(val game: Game) {
             is Monster -> moveIntoMonster(source, destination)
             is Rock -> {} // can not move, do nothing
             is Player -> {} // player moves to itself? should not happen
+        }
+    }
+
+    private fun processAction(action: Action) {
+        when (action) {
+            Action.Quit -> game.quit()
+            Action.Restart -> game.restart()
         }
     }
 

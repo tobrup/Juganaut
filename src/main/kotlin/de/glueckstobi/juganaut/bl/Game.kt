@@ -1,7 +1,9 @@
 package de.glueckstobi.juganaut.bl
 
 import de.glueckstobi.juganaut.bl.logic.GameOverReason
+import de.glueckstobi.juganaut.bl.logic.PlayerController
 import de.glueckstobi.juganaut.bl.logic.TurnController
+import de.glueckstobi.juganaut.ui.swing.MainGui
 
 /**
  * Beschreibt das Spiel mit allen Daten und der Spiel-Logik.
@@ -25,5 +27,13 @@ class Game(val world: World) {
      */
     fun gameOver(reason: GameOverReason) {
         gameOverReason = reason
+    }
+
+    fun quit() {
+        TODO("Not yet implemented")
+    }
+
+    fun restart() {
+        TODO("Not yet implemented")
     }
 }

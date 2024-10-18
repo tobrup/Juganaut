@@ -18,19 +18,9 @@ import kotlin.random.nextInt
 fun main(args: Array<String>) {
     while (true) {
         val game = createGame()
-        var inputController: UserInputHandler? = null
-        val keyListener = object : KeyAdapter() {
-            override fun keyPressed(e: KeyEvent) {
-                inputController?.onKeyPress(e)
-            }
-
-            override fun keyReleased(e: KeyEvent) {
-                inputController?.onKeyRelease(e)
-            }
-        }
         MainGui().startPlaying(game)
         while (true) {
-            if ()
+
         }
     }
 }

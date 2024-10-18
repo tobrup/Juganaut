@@ -110,7 +110,7 @@ class MainGui {
     private fun updateStatus(game: Game) {
         if (game.gameOverReason != null) {
             statusLabel.foreground = Color.RED
-            statusLabel.text = "GAME OVER"
+            statusLabel.text = "GAME OVER!! Drücke R zum Neustart, Q zum Verlassen"
         } else {
             statusLabel.foreground = Color.BLACK
             statusLabel.text = "Viel Spaß!"
@@ -131,7 +131,7 @@ class MainGui {
         window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE)
         window.setSize(1024, 1000)
 
-        window.setVisible(true)
+        window.isVisible = true
 
         window.contentPane.requestFocus()
         window.contentPane.addKeyListener(keyListener)
@@ -141,9 +141,11 @@ class MainGui {
                 super.windowClosed(e)
                 renderCycle?.clockStopped = true
                 window.dispose()
+                System.exit(0)
             }
         })
     }
+
 
     /**
      * Umrechnung von Nanosekunden in Millisekunden.
