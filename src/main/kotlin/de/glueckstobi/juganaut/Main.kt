@@ -3,10 +3,8 @@ package de.glueckstobi.juganaut
 import de.glueckstobi.juganaut.bl.Game
 import de.glueckstobi.juganaut.bl.World
 import de.glueckstobi.juganaut.bl.space.Coord
-import de.glueckstobi.juganaut.bl.worlditems.Monster
-import de.glueckstobi.juganaut.bl.worlditems.Player
-import de.glueckstobi.juganaut.bl.worlditems.Rock
-import de.glueckstobi.juganaut.bl.worlditems.WorldItem
+import de.glueckstobi.juganaut.bl.space.Direction
+import de.glueckstobi.juganaut.bl.worlditems.*
 import de.glueckstobi.juganaut.ui.swing.MainGui
 import kotlin.random.Random
 import kotlin.random.nextInt
@@ -20,7 +18,17 @@ private fun createGame(): Game {
     val world = World(20, 20)
     createItems(world, (20..50)) { Rock() }
     createItems(world, (20..50)) { Monster() }
-    world.setField(Coord(10, 10), Player())
+
+    val playerCoord = Coord(10, 10)
+    world.setField(playerCoord, Player())
+    val oben = playerCoord.move(Direction.Up)
+    val links = playerCoord.move(Direction.Left)
+    val unten = playerCoord.move(Direction.Down)
+    val rechts = playerCoord.move(Direction.Right)
+    world.setField(oben, Dirt)
+    world.setField(links, Dirt)
+    world.setField(unten, Dirt)
+    world.setField(rechts, Dirt)
     return Game(world)
 }
 
