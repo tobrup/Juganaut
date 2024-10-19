@@ -88,9 +88,39 @@ class PlayerController(val game: Game) {
         when (destinationItem) {
             EmptyField, Dirt -> movePlayer(source, destination)
             is Monster -> moveIntoMonster(source, destination)
-            is Rock -> {} // can not move, do nothing
+            is Rock -> tryMoveRock(destination, direction, source, destinationItem) // can not move, do nothing
             is Player -> {} // player moves to itself? should not happen
         }
+    }
+
+
+    fun tryMoveRock(rockCoord: Coord, direction: Direction, playerCoord: Coord, rock: Rock) {
+        if (rock.falling) {
+            return
+        }
+
+        val next = rockCoord.move(direction)
+
+        if (!game.world.isValid(next)) {
+            return
+        }
+
+        val nextItem = game.world.getField(next)
+        when (nextItem) {
+            is Rock -> return
+            is Monster -> return
+            Dirt -> return
+            is Player -> return //should not happen
+            EmptyField -> moveRock(rockCoord, rock, playerCoord, next)
+        }
+    }
+
+
+    fun moveRock(rockCoord: Coord, rock: Rock, playerCoord: Coord, next: Coord) {
+        val player = game.world.getField(playerCoord)
+        game.world.setField(next, rock)
+        game.world.setField(rockCoord, player)
+        game.world.setField(playerCoord, EmptyField)
     }
 
     /**
