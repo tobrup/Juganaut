@@ -18,6 +18,7 @@ private fun createGame(): Game {
     val world = World(20, 20)
     createItems(world, (20..50)) { Rock() }
     createItems(world, (20..50)) { Monster() }
+    createItems (world,10..20){Diamond}
 
     val playerCoord = Coord(10, 10)
     world.setField(playerCoord, Player())

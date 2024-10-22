@@ -17,6 +17,8 @@ object Dirt : WorldItem
  */
 object EmptyField : WorldItem
 
+
+object Diamond : WorldItem
 /**
  * Der Spieler
  */
