@@ -22,6 +22,7 @@ interface WorldItemRenderer {
                 is Monster -> StaticImageRenderer
                 Dirt -> StaticImageRenderer
                 EmptyField -> null
+                Diamond -> StaticImageRenderer
             }
         }
     }

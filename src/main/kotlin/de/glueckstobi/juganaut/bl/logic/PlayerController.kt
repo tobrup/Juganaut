@@ -90,6 +90,7 @@ class PlayerController(val game: Game) {
             is Monster -> moveIntoMonster(source, destination)
             is Rock -> tryMoveRock(destination, direction, source, destinationItem) // can not move, do nothing
             is Player -> {} // player moves to itself? should not happen
+            Diamond -> movePlayer(source,destination)
         }
     }
 
@@ -111,6 +112,7 @@ class PlayerController(val game: Game) {
             is Monster -> return
             Dirt -> return
             is Player -> return //should not happen
+            Diamond -> return
             EmptyField -> moveRock(rockCoord, rock, playerCoord, next)
         }
     }

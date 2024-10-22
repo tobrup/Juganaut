@@ -15,7 +15,7 @@ object StaticImageRenderer : WorldItemRenderer {
     private val dirtImage = loadImage("/dirt.png")
     private val rockImage = loadImage("/rock.png")
     private val monsterImage = loadImage("/monster.png")
-
+    private val diamondimage = loadImage("/diamond.png")
     /**
      * Lädt das Bild mit dem angengen Datei-Namen.
      */
@@ -54,6 +54,7 @@ object StaticImageRenderer : WorldItemRenderer {
             is Monster -> monsterImage
             Dirt -> dirtImage
             EmptyField -> null
+            Diamond -> diamondimage
         }
     }
 }
