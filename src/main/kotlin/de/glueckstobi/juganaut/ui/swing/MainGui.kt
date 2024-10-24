@@ -141,7 +141,6 @@ class MainGui {
                 super.windowClosed(e)
                 renderCycle?.clockStopped = true
                 window.dispose()
-                System.exit(0)
             }
         })
     }

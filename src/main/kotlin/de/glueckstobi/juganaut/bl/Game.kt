@@ -2,6 +2,7 @@ package de.glueckstobi.juganaut.bl
 
 import de.glueckstobi.juganaut.bl.logic.GameOverReason
 import de.glueckstobi.juganaut.bl.logic.TurnController
+import kotlin.system.exitProcess
 
 /**
  * Beschreibt das Spiel mit allen Daten und der Spiel-Logik.
@@ -28,7 +29,7 @@ class Game(val world: World) {
     }
 
     fun quit() {
-        TODO("Not yet implemented")
+        exitProcess(0)
     }
 
     fun restart() {
