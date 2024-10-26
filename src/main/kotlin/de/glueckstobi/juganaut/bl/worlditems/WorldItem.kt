@@ -22,7 +22,9 @@ object Diamond : WorldItem
 /**
  * Der Spieler
  */
-class Player : WorldItem
+class Player : WorldItem {
+    var diamondCount = 0
+}
 
 /**
  * Ein Monster
@@ -35,3 +37,4 @@ class Monster(var direction: Direction = Direction.random()) : WorldItem
  * @param falling true, wenn der Stein gerade fällt
  */
 class Rock(var falling: Boolean = false) : WorldItem
+

@@ -1,6 +1,7 @@
 package de.glueckstobi.juganaut.ui.swing
 
 import de.glueckstobi.juganaut.bl.Game
+import de.glueckstobi.juganaut.bl.worlditems.Player
 import de.glueckstobi.juganaut.ui.swing.game.UserInputHandler
 import de.glueckstobi.juganaut.ui.swing.game.WorldRenderer
 import java.awt.BorderLayout
@@ -112,8 +113,12 @@ class MainGui {
             statusLabel.foreground = Color.RED
             statusLabel.text = "GAME OVER"
         } else {
+            val playerCoord = game.world.find { it is Player }
+            if (playerCoord == null)return
+            val player = game.world.getField(playerCoord) as Player
+            val diamods = player.diamondCount
             statusLabel.foreground = Color.BLACK
-            statusLabel.text = "Viel Spaß!"
+            statusLabel.text = "Viel Spaß!  Diamanten gesammelt:  $diamods"
         }
     }
 
