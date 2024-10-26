@@ -109,14 +109,11 @@ class MainGui {
     }
 
     private fun updateStatus(game: Game) {
+        val diamods = game.diamondCount
         if (game.gameOverReason != null) {
             statusLabel.foreground = Color.RED
-            statusLabel.text = "GAME OVER"
+            statusLabel.text = "GAME OVER     Diamanten gesammelt:  $diamods "
         } else {
-            val playerCoord = game.world.find { it is Player }
-            if (playerCoord == null)return
-            val player = game.world.getField(playerCoord) as Player
-            val diamods = player.diamondCount
             statusLabel.foreground = Color.BLACK
             statusLabel.text = "Viel Spaß!  Diamanten gesammelt:  $diamods"
         }

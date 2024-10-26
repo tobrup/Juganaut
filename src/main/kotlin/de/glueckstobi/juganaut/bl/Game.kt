@@ -9,6 +9,7 @@ import de.glueckstobi.juganaut.bl.logic.TurnController
  */
 class Game(val world: World) {
 
+    var diamondCount = 0
     /**
      * Wenn der Spieler verloren hat, wird hier der Grund für das GameOver gespeichert
      */

@@ -95,11 +95,9 @@ class PlayerController(val game: Game) {
     }
 
     fun collectDiamond(source: Coord,destination: Coord) {
-        val player = game.world.getField(source) as Player
-
         movePlayer(source,destination)
-        val newCount = player.diamondCount+1
-        player.diamondCount = newCount
+        val newCount = game.diamondCount+1
+        game.diamondCount = newCount
     }
     fun tryMoveRock(rockCoord: Coord, direction: Direction, playerCoord: Coord, rock: Rock) {
         if (rock.falling) {
