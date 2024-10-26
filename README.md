@@ -1,5 +1,7 @@
 # Juganaut
 
+![Game Screenshot](doc/juganaut-screenshot.png)
+
 A very simple 2D game for kids who want to learn programming without starting a project from scratch.
 
 Documentation is in german since it's meant for german kids. :-) 
