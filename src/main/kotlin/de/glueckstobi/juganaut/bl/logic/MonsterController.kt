@@ -34,6 +34,13 @@ class MonsterController(val game: Game) {
         if (item !is Monster) {
             return // should not happen
         }
+
+        if (item.sleeping) {
+            tryWakeUp(source, item)
+            return
+        }
+
+
         val destination = source.move(item.direction)
         if (canMove(destination)) {
             val otherItem = game.world.getField(destination)
@@ -111,4 +118,29 @@ class MonsterController(val game: Game) {
         return nextDirection
     }
 
+    fun tryWakeUp(source: Coord, item: Monster) {
+        if (canWakeUp(source)) {
+            item.sleeping = false
+        }
+    }
+
+    fun canWakeUp(source: Coord): Boolean {
+        val cup = source.move(Direction.Up)
+        if (canMove(cup)) {
+            return true
+        }
+        val cleft = source.move(Direction.Left)
+        if (canMove(cleft)) {
+            return true
+        }
+        val cright = source.move(Direction.Right)
+        if (canMove(cright)) {
+            return true
+        }
+        val cdown = source.move(Direction.Down)
+        if (canMove(cdown)) {
+            return true
+        }
+        return false
+    }
 }

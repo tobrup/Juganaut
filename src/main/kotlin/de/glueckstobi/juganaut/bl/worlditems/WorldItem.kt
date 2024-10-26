@@ -19,6 +19,7 @@ object EmptyField : WorldItem
 
 
 object Diamond : WorldItem
+
 /**
  * Der Spieler
  */
@@ -30,7 +31,11 @@ class Player : WorldItem {
  * Ein Monster
  * @param direction die Richtung, in die sich das Monster gerade bewegt
  */
-class Monster(var direction: Direction = Direction.random()) : WorldItem
+class Monster() : WorldItem {
+    var direction: Direction = Direction.random()
+    var sleeping = true
+
+}
 
 /**
  * Ein Stein
