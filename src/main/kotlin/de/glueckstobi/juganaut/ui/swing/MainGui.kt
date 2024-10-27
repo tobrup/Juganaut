@@ -131,7 +131,7 @@ class MainGui {
         window.contentPane = contentPane
 
         window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE)
-        window.setSize(1024, 1000)
+        window.setSize(1800, 1800)
 
         window.setVisible(true)
 
