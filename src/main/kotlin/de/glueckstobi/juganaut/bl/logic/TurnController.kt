@@ -10,6 +10,7 @@ class TurnController(val game: Game) {
     val playerController = PlayerController(game)
     val rockController = RockController(game)
     val monsterController = MonsterController(game)
+    val bombcontroller = BombController(game)
 
     /**
      * Wird einmal pro Runde aufgerufen, wenn die nächste Runde ausgeführt werden soll.
@@ -18,6 +19,7 @@ class TurnController(val game: Game) {
         playerController.applyPlayerInput()
         rockController.rocksFall()
         monsterController.monstersMove()
+        bombcontroller.nextTurn()
     }
 
 }

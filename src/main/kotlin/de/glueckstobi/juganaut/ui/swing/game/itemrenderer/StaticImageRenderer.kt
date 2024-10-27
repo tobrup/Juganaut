@@ -17,6 +17,8 @@ object StaticImageRenderer : WorldItemRenderer {
     private val monsterImage = loadImage("/monster.png")
     private val monsterSleepImage = loadImage("/monster-sleeping.png")
     private val diamondimage = loadImage("/diamond.png")
+    private val BombImage = loadImage("/bombe.png")
+
 
     /**
      * Lädt das Bild mit dem angengen Datei-Namen.
@@ -53,6 +55,7 @@ object StaticImageRenderer : WorldItemRenderer {
         return when (item) {
             is Player -> playerImage
             is Rock -> rockImage
+            is Bomb -> BombImage
             is Monster -> {
                 if (item.sleeping) {
                     monsterSleepImage

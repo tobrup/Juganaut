@@ -20,6 +20,7 @@ interface WorldItemRenderer {
                 is Player -> StaticImageRenderer
                 is Rock -> StaticImageRenderer
                 is Monster -> StaticImageRenderer
+                is Bomb -> StaticImageRenderer
                 Dirt -> StaticImageRenderer
                 EmptyField -> null
                 Diamond -> StaticImageRenderer
