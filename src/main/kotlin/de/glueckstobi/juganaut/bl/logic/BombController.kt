@@ -2,8 +2,7 @@ package de.glueckstobi.juganaut.bl.logic
 
 import de.glueckstobi.juganaut.bl.Game
 import de.glueckstobi.juganaut.bl.space.Coord
-import de.glueckstobi.juganaut.bl.worlditems.Bomb
-import de.glueckstobi.juganaut.bl.worlditems.EmptyField
+import de.glueckstobi.juganaut.bl.worlditems.*
 
 class BombController(val game: Game) {
 
@@ -44,8 +43,38 @@ class BombController(val game: Game) {
             Coord(coord.x + 1, coord.y + 1),
             Coord(coord.x + 1, coord.y - 1),
         )
+
         explosionField.forEach { c ->
-            game.world.setField(c, EmptyField)
+            if (game.world.isValid(c)) {
+                val item = game.world.getField(c)
+                when (item) {
+                    is Bomb -> activateBomb(bomb, item, c)
+                    Diamond -> clearField(c)
+                    Dirt -> clearField(c)
+                    EmptyField -> {}
+                    is Monster -> clearField(c)
+                    is Player -> killPlayer(item, c)
+                    is Rock -> clearField(c)
+                }
+            }
+
         }
+    }
+
+    private fun clearField(c: Coord) {
+        game.world.setField(c, EmptyField)
+    }
+
+    fun activateBomb(explosionbomb: Bomb, destinationBomb: Bomb, c: Coord) {
+        if (explosionbomb != destinationBomb) {
+            destinationBomb.active = true
+        } else {
+            clearField(c)
+        }
+    }
+
+    fun killPlayer(item: Player, c: Coord) {
+        game.gameOver(Explosion())
+        clearField(c)
     }
 }
