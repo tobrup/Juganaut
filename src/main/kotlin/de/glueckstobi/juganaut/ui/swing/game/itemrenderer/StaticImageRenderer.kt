@@ -17,7 +17,8 @@ object StaticImageRenderer : WorldItemRenderer {
     private val monsterImage = loadImage("/monster.png")
     private val monsterSleepImage = loadImage("/monster-sleeping.png")
     private val diamondimage = loadImage("/diamond.png")
-    private val BombImage = loadImage("/bombe.png")
+    private val bombImage = loadImage("/bombe.png")
+    private val bombActiveImage = loadImage("/bombe-active.png")
 
 
     /**
@@ -55,7 +56,14 @@ object StaticImageRenderer : WorldItemRenderer {
         return when (item) {
             is Player -> playerImage
             is Rock -> rockImage
-            is Bomb -> BombImage
+            is Bomb -> {
+                if (item.active) {
+                    bombActiveImage
+                } else {
+                    bombImage
+                }
+            }
+
             is Monster -> {
                 if (item.sleeping) {
                     monsterSleepImage
