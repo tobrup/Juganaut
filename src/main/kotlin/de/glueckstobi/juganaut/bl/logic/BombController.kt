@@ -135,6 +135,9 @@ class BombController(val game: Game) {
      * @param rock der Stein
      */
     private fun stopFalling(bomb: Bomb) {
+        if (bomb.falling) {
+            bomb.active = true
+        }
         bomb.falling = false
     }
 
