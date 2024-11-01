@@ -19,7 +19,8 @@ class TurnController(val game: Game) {
         playerController.applyPlayerInput()
         rockController.rocksFall()
         monsterController.monstersMove()
-        bombcontroller.nextTurn()
+        bombcontroller.bombsFall()
+        bombcontroller.bombsTick()
     }
 
 }

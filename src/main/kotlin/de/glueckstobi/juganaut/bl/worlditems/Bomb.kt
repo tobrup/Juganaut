@@ -8,5 +8,6 @@ package de.glueckstobi.juganaut.bl.worlditems
 class Bomb() : WorldItem {
     var active = false
     var countdown = 3
+    var falling = false
 
 }
