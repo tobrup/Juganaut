@@ -43,7 +43,7 @@ class RockController(val game: Game) {
             EmptyField -> fall(item, source, destination)
             is Rock, Dirt -> stopFalling(item)
             is Player, is Monster -> tryHit(item, source, destination, itemBelow)
-            is Bomb -> stopFalling(item)
+            is Bomb -> rockOnBomb(item, itemBelow)
             Diamond -> stopFalling(item)
         }
     }
@@ -87,4 +87,9 @@ class RockController(val game: Game) {
         // otherwise it's ok, rock is just laying on the head
     }
 
+    fun rockOnBomb(rock: Rock, bomb: Bomb) {
+        if (rock.falling) {
+            bomb.active = true
+        }
+    }
 }
