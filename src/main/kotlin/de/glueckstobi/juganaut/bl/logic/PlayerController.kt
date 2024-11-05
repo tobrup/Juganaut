@@ -90,6 +90,7 @@ class PlayerController(val game: Game) {
         when (destinationItem) {
             EmptyField, Dirt -> movePlayer(source, destination)
             is Monster -> moveIntoMonster(source, destination)
+            is Diamond -> moveIntoDiamond(source, destination)
             is Rock -> {} // can not move, do nothing
             is Player -> {} // player moves to itself? should not happen
         }
@@ -111,6 +112,11 @@ class PlayerController(val game: Game) {
         val player = game.world.getField(source)
         game.world.setField(source, EmptyField)
         game.world.setField(destination, player)
+    }
+
+    private fun moveIntoDiamond(source: Coord, destination: Coord) {
+        movePlayer(source, destination)
+        game.diamondCount++
     }
 
     /**

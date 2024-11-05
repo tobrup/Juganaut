@@ -3,8 +3,10 @@ package de.glueckstobi.juganaut.ui.swing
 import de.glueckstobi.juganaut.bl.Game
 import de.glueckstobi.juganaut.ui.swing.game.UserInputHandler
 import de.glueckstobi.juganaut.ui.swing.game.WorldRenderer
+import de.glueckstobi.juganaut.ui.swing.game.itemrenderer.StaticImageRenderer.loadImage
 import java.awt.BorderLayout
 import java.awt.Color
+import java.awt.Dimension
 import java.awt.Font
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
@@ -61,6 +63,7 @@ class MainGui {
     private val window: JFrame = JFrame("Juganaut")
 
     private val statusLabel: JLabel = JLabel(" ")
+    private val diamondCountLabel:JLabel = JLabel("")
 
     /**
      * Hört auf Tasten-Drücke und gibt es an den [inputController] weiter.
@@ -115,6 +118,11 @@ class MainGui {
             statusLabel.foreground = Color.BLACK
             statusLabel.text = "Viel Spaß!"
         }
+        diamondCountLabel.icon = ImageIcon(loadImage("/diamond.png"))
+        diamondCountLabel.text = game.diamondCount.toString()
+        diamondCountLabel.foreground = Color.CYAN
+        diamondCountLabel.horizontalAlignment = SwingConstants.TRAILING
+        diamondCountLabel.maximumSize = Dimension(diamondCountLabel.maximumSize.width/2 ,diamondCountLabel.maximumSize.height)
     }
 
 
@@ -124,6 +132,7 @@ class MainGui {
     private fun showWindow(renderer: WorldRenderer) {
         val contentPane = JPanel(BorderLayout())
         contentPane.add(statusLabel, BorderLayout.NORTH)
+        contentPane.add(diamondCountLabel, BorderLayout.LINE_END)
         contentPane.add(renderer, BorderLayout.CENTER)
         statusLabel.font = Font("Sans-Serif", Font.PLAIN, 30)
         window.contentPane = contentPane

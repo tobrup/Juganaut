@@ -13,6 +13,11 @@ sealed interface WorldItem
 object Dirt : WorldItem
 
 /**
+ * Diamanten
+ */
+class Diamond : WorldItem
+
+/**
  * Ein leeres Feld
  */
 object EmptyField : WorldItem

@@ -16,6 +16,10 @@ class Game(val world: World) {
     var gameOverReason: GameOverReason? = null
 
     /**
+     * Hier wird die Anzahl der gesammelten Diamanten gespeichert
+     */
+    var diamondCount : Int = 0
+    /**
      * Enthält die Logik, um die Runden auszuführen.
      */
     val turnController = TurnController(this)

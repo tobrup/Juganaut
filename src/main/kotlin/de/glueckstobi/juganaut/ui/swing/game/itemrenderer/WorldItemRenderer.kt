@@ -19,6 +19,7 @@ interface WorldItemRenderer {
             return when (item) {
                 is Player -> StaticImageRenderer
                 is Rock -> StaticImageRenderer
+                is Diamond -> StaticImageRenderer
                 is Monster -> StaticImageRenderer
                 Dirt -> StaticImageRenderer
                 EmptyField -> null

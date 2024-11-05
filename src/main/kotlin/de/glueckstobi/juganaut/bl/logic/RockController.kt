@@ -42,7 +42,7 @@ class RockController(val game: Game) {
         when (itemBelow) {
             EmptyField -> fall(item, source, destination)
             is Rock, Dirt -> stopFalling(item)
-            is Player, is Monster -> tryHit(item, source, destination, itemBelow)
+            is Player, is Monster, is Diamond -> tryHit(item, source, destination, itemBelow)
         }
     }
 

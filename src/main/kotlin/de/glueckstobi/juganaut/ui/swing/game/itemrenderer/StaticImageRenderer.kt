@@ -15,11 +15,12 @@ object StaticImageRenderer : WorldItemRenderer {
     private val dirtImage = loadImage("/dirt.png")
     private val rockImage = loadImage("/rock.png")
     private val monsterImage = loadImage("/monster.png")
+    private val diamondImage = loadImage("/diamond.png")
 
     /**
      * Lädt das Bild mit dem angegebenen Datei-Namen.
      */
-    private fun loadImage(filename: String): Image {
+    fun loadImage(filename: String): Image {
         val rawImage = ImageIcon(javaClass.getResource(filename)).image
         val scaledImage = rawImage.getScaledInstance(WorldRenderer.fieldRenderSize, WorldRenderer.fieldRenderSize, 0)
         return scaledImage
@@ -52,6 +53,7 @@ object StaticImageRenderer : WorldItemRenderer {
             is Player -> playerImage
             is Rock -> rockImage
             is Monster -> monsterImage
+            is Diamond -> diamondImage
             Dirt -> dirtImage
             EmptyField -> null
         }
