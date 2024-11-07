@@ -6,8 +6,8 @@ import de.glueckstobi.juganaut.ui.swing.game.WorldRenderer
 import de.glueckstobi.juganaut.ui.swing.game.itemrenderer.StaticImageRenderer.loadImage
 import java.awt.BorderLayout
 import java.awt.Color
-import java.awt.Dimension
 import java.awt.Font
+import java.awt.GridLayout
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
 import java.awt.event.WindowAdapter
@@ -113,16 +113,17 @@ class MainGui {
     private fun updateStatus(game: Game) {
         if (game.gameOverReason != null) {
             statusLabel.foreground = Color.RED
-            statusLabel.text = "GAME OVER!! Drücke R zum Neustart, Q zum Verlassen"
+            statusLabel.text = "GAME OVER!! R:Restart Q:Quit"
+        } else if (game.diamondsInGame <= game.diamondCount) {
+            statusLabel.foreground = Color.GREEN
+            statusLabel.text = "Gewonnen!!!"
         } else {
             statusLabel.foreground = Color.BLACK
             statusLabel.text = "Viel Spaß!"
+
         }
-        diamondCountLabel.icon = ImageIcon(loadImage("/diamond.png"))
         diamondCountLabel.text = game.diamondCount.toString()
-        diamondCountLabel.foreground = Color.CYAN
-        diamondCountLabel.horizontalAlignment = SwingConstants.TRAILING
-        diamondCountLabel.maximumSize = Dimension(diamondCountLabel.maximumSize.width/2 ,diamondCountLabel.maximumSize.height)
+
     }
 
 
@@ -131,14 +132,22 @@ class MainGui {
      */
     private fun showWindow(renderer: WorldRenderer) {
         val contentPane = JPanel(BorderLayout())
-        contentPane.add(statusLabel, BorderLayout.NORTH)
-        contentPane.add(diamondCountLabel, BorderLayout.LINE_END)
+        val statusPane = JPanel(GridLayout())
+        contentPane.add(statusPane, BorderLayout.NORTH)
+        statusPane.add(statusLabel, 0)
+        statusPane.add(diamondCountLabel, 1)
         contentPane.add(renderer, BorderLayout.CENTER)
         statusLabel.font = Font("Sans-Serif", Font.PLAIN, 30)
+
+        diamondCountLabel.foreground = Color.CYAN
+        diamondCountLabel.horizontalAlignment = SwingConstants.RIGHT
+        diamondCountLabel.icon = ImageIcon(loadImage("/diamond.png"))
+        diamondCountLabel.font = Font("Sans-Serif", Font.PLAIN, 30)
+
         window.contentPane = contentPane
 
         window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE)
-        window.setSize(1024, 1000)
+        window.setSize(1024, 700)
 
         window.isVisible = true
 

@@ -7,8 +7,9 @@ import kotlin.system.exitProcess
 /**
  * Beschreibt das Spiel mit allen Daten und der Spiel-Logik.
  * @param world die Spielwelt mit allen Feldern.
+ * @param diamondsInGame Die Anzahl der gesamten Diamanten in einem Spiel
  */
-class Game(val world: World) {
+class Game(val world: World, val diamondsInGame : Int) {
 
     /**
      * Wenn der Spieler verloren hat, wird hier der Grund für das GameOver gespeichert
