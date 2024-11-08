@@ -67,9 +67,26 @@ class PlayerController(val game: Game) {
         playerInputProcessed = true
         when (currentInput) {
             is PlayerMovement -> tryMovePlayer(currentInput.direction)
+            is PlayerActions -> return
+        }
+    }
+    fun applyPlayerActions() {
+        val currentInput = playerInput
+        if (currentInput == null) {
+            return
+        }
+        if (!playerInputPressed) {
+            // key is not pressed and the input is pressed at least once (or the last time),
+            // so reset the input to null
+            playerInput = null
+        }
+        playerInputProcessed = true
+        when (currentInput) {
+            is PlayerMovement -> return
             is PlayerActions -> processAction(currentInput.action)
         }
     }
+
 
 
     /**
@@ -116,7 +133,10 @@ class PlayerController(val game: Game) {
 
     private fun moveIntoDiamond(source: Coord, destination: Coord) {
         movePlayer(source, destination)
-        game.diamondCount++
+        if (game.diamondCount++ <= game.diamondsInGame) {
+            game.win(AllDiamondsCollected(game.diamondCount))
+        }
+
     }
 
     /**

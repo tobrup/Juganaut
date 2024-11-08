@@ -57,6 +57,33 @@ class MainGui {
 
     }
 
+    inner class ActionCycle(val game: Game) : Runnable {
+
+        /**
+         * True, wenn die Spiel-Uhr nicht weiterlaufen soll (weil das Spiel beendet ist)
+         */
+        @Volatile
+        var clockStopped = false
+
+        /**
+         * Wird regelmäßig für jede neue Spiel-Runde aufgerufen.
+         */
+        override fun run() {
+            var previousTickMs = nanoToMilli(System.nanoTime())
+            while (!clockStopped && !Thread.currentThread().isInterrupted) {
+                val now = nanoToMilli(System.nanoTime())
+                val nextTick = previousTickMs + tickDurationMs
+                val sleepTime = nextTick - now
+                Thread.sleep(sleepTime)
+                previousTickMs = nextTick
+                SwingUtilities.invokeLater {
+                    game.turnController.tickActions()
+                }
+            }
+        }
+
+    }
+
     /**
      * Das Fenster
      */
@@ -82,6 +109,8 @@ class MainGui {
 
     private var renderCycle: RenderCycle? = null
 
+    private var actionCycle: ActionCycle? = null
+
     /**
      * Startet das Spiel.
      */
@@ -90,6 +119,7 @@ class MainGui {
         inputController = UserInputHandler(game)
         showWindow(renderer)
         startRenderCycle(game)
+        startActionCycle(game)
     }
 
     /**
@@ -98,6 +128,11 @@ class MainGui {
     private fun startRenderCycle(game: Game) {
         renderCycle = RenderCycle(game)
         Thread(renderCycle, "TickThread").start()
+    }
+
+    private fun startActionCycle(game: Game) {
+        actionCycle = ActionCycle(game)
+        Thread(actionCycle, "ActionThread").start()
     }
 
     /**
@@ -114,15 +149,16 @@ class MainGui {
         if (game.gameOverReason != null) {
             statusLabel.foreground = Color.RED
             statusLabel.text = "GAME OVER!! R:Restart Q:Quit"
-        } else if (game.diamondsInGame <= game.diamondCount) {
+        } else if (game.winningReason != null) {
             statusLabel.foreground = Color.GREEN
             statusLabel.text = "Gewonnen!!!"
+            renderCycle?.clockStopped = true
         } else {
-            statusLabel.foreground = Color.BLACK
+            statusLabel.foreground = Color.WHITE
             statusLabel.text = "Viel Spaß!"
 
         }
-        diamondCountLabel.text = game.diamondCount.toString()
+        diamondCountLabel.text = game.diamondCount.toString() + " / " + game.diamondsInGame.toString()
 
     }
 
@@ -133,16 +169,22 @@ class MainGui {
     private fun showWindow(renderer: WorldRenderer) {
         val contentPane = JPanel(BorderLayout())
         val statusPane = JPanel(GridLayout())
+        val backgroundColor = Color.BLACK
         contentPane.add(statusPane, BorderLayout.NORTH)
         statusPane.add(statusLabel, 0)
         statusPane.add(diamondCountLabel, 1)
         contentPane.add(renderer, BorderLayout.CENTER)
         statusLabel.font = Font("Sans-Serif", Font.PLAIN, 30)
+        statusLabel.isOpaque = true
+        statusLabel.background = backgroundColor
 
         diamondCountLabel.foreground = Color.CYAN
+        diamondCountLabel.isOpaque = true
+        diamondCountLabel.background = backgroundColor
         diamondCountLabel.horizontalAlignment = SwingConstants.RIGHT
         diamondCountLabel.icon = ImageIcon(loadImage("/diamond.png"))
         diamondCountLabel.font = Font("Sans-Serif", Font.PLAIN, 30)
+        diamondCountLabel.setHorizontalTextPosition(SwingConstants.LEFT)
 
         window.contentPane = contentPane
 

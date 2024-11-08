@@ -21,3 +21,4 @@ class PlayerWalksIntoMonster(playerCoord: Coord, monsterCoord: Coord) : GameOver
  * Monster erwischt den Spieler
  */
 class MonsterCatchesPlayer(monsterCoord: Coord, playerCoord: Coord) : GameOverReason
+

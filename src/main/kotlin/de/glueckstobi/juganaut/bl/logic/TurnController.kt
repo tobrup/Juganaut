@@ -19,5 +19,8 @@ class TurnController(val game: Game) {
         rockController.rocksFall()
         monsterController.monstersMove()
     }
+    fun tickActions() {
+        playerController.applyPlayerActions()
+    }
 
 }

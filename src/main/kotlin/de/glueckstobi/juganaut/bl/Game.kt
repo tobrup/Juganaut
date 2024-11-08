@@ -2,6 +2,7 @@ package de.glueckstobi.juganaut.bl
 
 import de.glueckstobi.juganaut.bl.logic.GameOverReason
 import de.glueckstobi.juganaut.bl.logic.TurnController
+import de.glueckstobi.juganaut.bl.logic.WinningReason
 import kotlin.system.exitProcess
 
 /**
@@ -17,6 +18,10 @@ class Game(val world: World, val diamondsInGame : Int) {
     var gameOverReason: GameOverReason? = null
 
     /**
+     * Hier wird gespeichert, ob der Spieler gewonnen hat
+     */
+    var winningReason: WinningReason? = null
+    /**
      * Hier wird die Anzahl der gesammelten Diamanten gespeichert
      */
     var diamondCount : Int = 0
@@ -31,6 +36,15 @@ class Game(val world: World, val diamondsInGame : Int) {
      */
     fun gameOver(reason: GameOverReason) {
         gameOverReason = reason
+    }
+
+    /**
+     * Wird aufgerufen, wenn der Spieler gewonnen hat.
+     * @param reason der Grund für den Gewinn
+     */
+    fun win(reason: WinningReason) {
+        winningReason = reason
+
     }
 
     fun quit() {
