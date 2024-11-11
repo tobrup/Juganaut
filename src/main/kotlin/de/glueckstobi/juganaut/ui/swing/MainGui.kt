@@ -53,36 +53,11 @@ class MainGui {
                     tickRenderCycle(game)
                 }
             }
+
         }
 
     }
 
-    inner class ActionCycle(val game: Game) : Runnable {
-
-        /**
-         * True, wenn die Spiel-Uhr nicht weiterlaufen soll (weil das Spiel beendet ist)
-         */
-        @Volatile
-        var clockStopped = false
-
-        /**
-         * Wird regelmäßig für jede neue Spiel-Runde aufgerufen.
-         */
-        override fun run() {
-            var previousTickMs = nanoToMilli(System.nanoTime())
-            while (!clockStopped && !Thread.currentThread().isInterrupted) {
-                val now = nanoToMilli(System.nanoTime())
-                val nextTick = previousTickMs + tickDurationMs
-                val sleepTime = nextTick - now
-                Thread.sleep(sleepTime)
-                previousTickMs = nextTick
-                SwingUtilities.invokeLater {
-                    game.turnController.tickActions()
-                }
-            }
-        }
-
-    }
 
     /**
      * Das Fenster
@@ -109,8 +84,6 @@ class MainGui {
 
     private var renderCycle: RenderCycle? = null
 
-    private var actionCycle: ActionCycle? = null
-
     /**
      * Startet das Spiel.
      */
@@ -119,7 +92,6 @@ class MainGui {
         inputController = UserInputHandler(game)
         showWindow(renderer)
         startRenderCycle(game)
-        startActionCycle(game)
     }
 
     /**
@@ -128,11 +100,6 @@ class MainGui {
     private fun startRenderCycle(game: Game) {
         renderCycle = RenderCycle(game)
         Thread(renderCycle, "TickThread").start()
-    }
-
-    private fun startActionCycle(game: Game) {
-        actionCycle = ActionCycle(game)
-        Thread(actionCycle, "ActionThread").start()
     }
 
     /**
@@ -152,7 +119,6 @@ class MainGui {
         } else if (game.winningReason != null) {
             statusLabel.foreground = Color.GREEN
             statusLabel.text = "Gewonnen!!!"
-            renderCycle?.clockStopped = true
         } else {
             statusLabel.foreground = Color.WHITE
             statusLabel.text = "Viel Spaß!"
