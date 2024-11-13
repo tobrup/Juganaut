@@ -131,9 +131,15 @@ class PlayerController(val game: Game) {
         game.world.setField(destination, player)
     }
 
+    /**
+     * Bewegt den Spieler auf das Feld eines Diamanten
+     * @param source Ursprungs-Koordinate
+     * @param destination Ziel-Koordinate
+     */
     private fun moveIntoDiamond(source: Coord, destination: Coord) {
         movePlayer(source, destination)
-        if (game.diamondCount++ <= game.diamondsInGame) {
+        // Wenn der Spieler genauso viele Diamanten hat wie auf dem Spielfeld verteilt sind, dann ist das Spiel gewonnen
+        if (game.diamondCount++ >= game.diamondsInGame) {
             game.win(AllDiamondsCollected(game.diamondCount))
         }
 

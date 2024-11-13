@@ -136,7 +136,7 @@ class MainGui {
         val contentPane = JPanel(BorderLayout())
         val statusPane = JPanel(GridLayout())
         val backgroundColor = Color.BLACK
-        contentPane.add(statusPane, BorderLayout.NORTH)
+        contentPane.add(statusPane, BorderLayout.SOUTH)
         statusPane.add(statusLabel, 0)
         statusPane.add(diamondCountLabel, 1)
         contentPane.add(renderer, BorderLayout.CENTER)
