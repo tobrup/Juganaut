@@ -1,6 +1,7 @@
 # Juganaut
 
-![Game Screenshot](doc/juganaut-screenshot.png)
+![Game Screenshot](https://github.com/user-attachments/assets/0fb92e87-efd8-4a21-bd1f-7eaaec892102)
+
 
 A very simple 2D game for kids who want to learn programming without starting a project from scratch.
 
