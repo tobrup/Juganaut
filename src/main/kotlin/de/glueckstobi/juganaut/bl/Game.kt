@@ -47,10 +47,16 @@ class Game(val world: World, val diamondsInGame : Int) {
 
     }
 
+    /**
+     * Das Spiel wird Beendet
+     */
     fun quit() {
         exitProcess(0)
     }
 
+    /**
+     * Das Spiel wird neu gestartet
+     */
     fun restart() {
         TODO("Not yet implemented")
     }

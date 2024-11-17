@@ -1,6 +1,9 @@
 package de.glueckstobi.juganaut.ui.swing
 
 import de.glueckstobi.juganaut.bl.Game
+import de.glueckstobi.juganaut.bl.World
+import de.glueckstobi.juganaut.bl.space.Coord
+import de.glueckstobi.juganaut.bl.worlditems.*
 import de.glueckstobi.juganaut.ui.swing.game.UserInputHandler
 import de.glueckstobi.juganaut.ui.swing.game.WorldRenderer
 import de.glueckstobi.juganaut.ui.swing.game.itemrenderer.StaticImageRenderer.loadImage
@@ -13,6 +16,8 @@ import java.awt.event.KeyEvent
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
 import javax.swing.*
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 
 /**
@@ -24,7 +29,7 @@ class MainGui {
         /**
          * Die Zeit einer Spiel-Runde (in Millisekunden)
          */
-        val tickDurationMs = 500.toLong()
+        val tickDurationMs = 250.toLong()
     }
 
     /**
@@ -84,14 +89,80 @@ class MainGui {
 
     private var renderCycle: RenderCycle? = null
 
+
     /**
      * Startet das Spiel.
      */
-    fun startPlaying(game: Game): JFrame {
+    fun startPlaying(playerX: Int, playerY: Int, diamondsInGame: Int): JFrame {
+        val game = createGame(playerX, playerY, diamondsInGame)
         val renderer = WorldRenderer(game.world)
         inputController = UserInputHandler(game)
         startRenderCycle(game)
         return showWindow(renderer)
+    }
+
+    /**
+     * Erstellt ein neues Spiel
+     * @param playerX Die X-Koordinate wo der Spieler gespawnt wird
+     * @param playerY Die Y-Koordinate wo der Spieler gespawnt wird
+     * @param diamondsInGame wie viele Diamanten im Spiel sein sollen
+     */
+    private fun createGame(playerX : Int, playerY : Int, diamondsInGame : Int): Game {
+        val world = World(20, 20)
+        createItems(world, (20..50), playerX, playerY) { Rock() }
+        createItems(world, (20..50), playerX, playerY) { Monster() }
+        createItems(world, (diamondsInGame..diamondsInGame), playerX, playerY) { Diamond() }
+        world.setField(Coord(playerX, playerY), Player())
+        return Game(world, diamondsInGame)
+    }
+
+    /**
+     * erstellt die Items für ein Spiel
+     * @param world Die Welt, wo die Items gespawnt werden
+     * @param itemCountRange Wie viele Items gespawnt werden
+     * @param playerX Die X-Koordinate wo der Spieler steht
+     * @param playerY Die Y-Koordinate wo der Spieler steht
+     * @param itemFactory Welches Item gespawnt wird
+     */
+    private fun <T : WorldItem> createItems(world: World, itemCountRange: IntRange, playerX: Int, playerY: Int, itemFactory: () -> T) {
+        val itemCount = Random.nextInt(itemCountRange)
+        (1..itemCount).forEach {
+            world.setField(Coord(getValidXCoordinate(world, playerX), getValidYCoordinate(world, playerY)), itemFactory())
+        }
+    }
+
+    /**
+     * findet eine gültige Y-Koordinate, wo Items spawnen können
+     * (gültig heißt: nicht neben dem Spieler)
+     * @param world die Welt, wo eine gültige Koordinate gesucht wird
+     * @param playerY Die Y-Koordinate wo der Spieler steht
+     */
+    private fun getValidYCoordinate(world: World, playerY: Int): Int {
+        while (true) {
+            val y = Random.nextInt(world.validYRange)
+            if (y in playerY-1..playerY+1) {
+                continue
+            } else {
+                return y
+            }
+        }
+    }
+
+    /**
+     * findet eine gültige X-Koordinate, wo Items spawnen können
+     * (gültig heißt: nicht neben dem Spieler)
+     * @param world die Welt, wo eine gültige Koordinate gesucht wird
+     * @param playerX Die X-Koordinate wo der Spieler steht
+     */
+    private fun getValidXCoordinate(world: World, playerX: Int): Int {
+        while (true) {
+            val x = Random.nextInt(world.validXRange)
+            if (x in playerX-1..playerX+1) {
+                continue
+            } else {
+                return x
+            }
+        }
     }
 
     /**

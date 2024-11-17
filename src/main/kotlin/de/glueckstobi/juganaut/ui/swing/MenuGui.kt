@@ -3,7 +3,6 @@ package de.glueckstobi.juganaut.ui.swing
 import com.intellij.uiDesigner.core.GridConstraints
 import com.intellij.uiDesigner.core.GridLayoutManager
 import com.intellij.uiDesigner.core.Spacer
-import de.glueckstobi.juganaut.bl.Game
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.Font
@@ -14,7 +13,7 @@ import javax.swing.plaf.FontUIResource
 import javax.swing.text.StyleContext
 
 
-class MenuGui(game: Game) : JFrame() {
+class MenuGui(playerX: Int, playerY: Int, diamondsInGame: Int ) : JFrame() {
     private var contentPane: JPanel = JPanel(GridLayoutManager(4, 1, Insets(100,100,100,100), -1, -1))
     private var nameLabel: JLabel = JLabel("Juganaut", SwingConstants.CENTER)
     private var quitButton: JButton = JButton("QUIT")
@@ -38,7 +37,7 @@ class MenuGui(game: Game) : JFrame() {
 
         startButton.addActionListener { e: ActionEvent? ->
             dispose()
-            MainGui().startPlaying(game)
+            MainGui().startPlaying(playerX, playerY, diamondsInGame)
         }
     }
 private fun setupUI() {
