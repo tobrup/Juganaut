@@ -11,7 +11,7 @@ import javax.swing.ImageIcon
  */
 object StaticImageRenderer : WorldItemRenderer {
 
-    private val playerImage = loadImage("/doggy.png")
+    private val playerImage = loadImage("/cat.png")
     private val dirtImage = loadImage("/dirt.png")
     private val rockImage = loadImage("/rock.png")
     private val monsterImage = loadImage("/monster.png")

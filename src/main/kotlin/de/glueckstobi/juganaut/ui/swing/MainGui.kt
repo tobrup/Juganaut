@@ -87,11 +87,11 @@ class MainGui {
     /**
      * Startet das Spiel.
      */
-    fun startPlaying(game: Game) {
+    fun startPlaying(game: Game): JFrame {
         val renderer = WorldRenderer(game.world)
         inputController = UserInputHandler(game)
-        showWindow(renderer)
         startRenderCycle(game)
+        return showWindow(renderer)
     }
 
     /**
@@ -132,7 +132,7 @@ class MainGui {
     /**
      * Baut das Fenster auf und zeigt es an.
      */
-    private fun showWindow(renderer: WorldRenderer) {
+    private fun showWindow(renderer: WorldRenderer): JFrame {
         val contentPane = JPanel(BorderLayout())
         val statusPane = JPanel(GridLayout())
         val backgroundColor = Color.BLACK
@@ -169,6 +169,7 @@ class MainGui {
                 window.dispose()
             }
         })
+        return window
     }
 
 

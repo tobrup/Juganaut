@@ -8,6 +8,7 @@ version '0.1-ALPHA-STANDALONE'
 
 repositories {
     mavenCentral()
+    maven { url "https://www.jetbrains.com/intellij-repository/releases" }
 }
 sourceSets {
     main {
@@ -20,7 +21,7 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    implementation group: 'com.intellij', name: 'forms_rt', version: '7.0.3'
+    implementation 'com.jetbrains.intellij.java:java-gui-forms-rt:203.7148.30'
 }
 
 test {
