@@ -4,27 +4,24 @@ import de.glueckstobi.juganaut.bl.Game
 import de.glueckstobi.juganaut.bl.World
 import de.glueckstobi.juganaut.bl.space.Coord
 import de.glueckstobi.juganaut.bl.worlditems.*
-import de.glueckstobi.juganaut.ui.swing.MainGui
+import de.glueckstobi.juganaut.ui.swing.MenuGui
 import kotlin.random.Random
 import kotlin.random.nextInt
 
 
 fun main(args: Array<String>) {
-//    if (args[0] == "" || args[1] == "") {
-//
-//    }
 
     val playerX = args[0].toInt()
     val playerY = args[1].toInt()
     val diamondsInGame = args[2].toInt()
     val game = createGame(playerX, playerY, diamondsInGame)
-
-    MainGui().startPlaying(game)
+    val menuGui = MenuGui(game)
+    menuGui.isVisible = true
 
 }
 
-private fun createGame(playerX : Int, playerY : Int, diamondsInGame : Int): Game {
-    val world = World(20, 10)
+ fun createGame(playerX : Int, playerY : Int, diamondsInGame : Int): Game {
+    val world = World(20, 20)
     createItems(world, (20..50), playerX, playerY) { Rock() }
     createItems(world, (20..50), playerX, playerY) { Monster() }
     createItems(world, (diamondsInGame..diamondsInGame), playerX, playerY) { Diamond() }
