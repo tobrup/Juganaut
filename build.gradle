@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'de.sirvincelot'
-version '0.1-ALPHA-STANDALONE'
+version 'ALPHA-0.2-STANDALONE'
 
 repositories {
     mavenCentral()

@@ -4,13 +4,24 @@ import de.glueckstobi.juganaut.ui.swing.MenuGui
 
 
 fun main(args: Array<String>) {
-
-
-    val playerX = args[0].toInt()
-    val playerY = args[1].toInt()
-    val diamondsInGame = args[2].toInt()
+    val providedArgs = checkArgs(args)
+    val playerX = providedArgs[0].toInt()
+    val playerY = providedArgs[1].toInt()
+    val diamondsInGame = providedArgs[2].toInt()
+    checkArgs(args)
     val menuGui = MenuGui(playerX, playerY, diamondsInGame)
     menuGui.isVisible = true
 
+}
+
+/**
+ * Checkt, ob die Argumente alle vorhanden sind. Wenn nicht, dann gibt er die Standartwerte aus.
+ * Diese sind: playerX = 10; playerY = 10; diamondsInGame = 3;
+ */
+private fun checkArgs(args: Array<String>): Array<String> {
+    if (args.size == 3) {
+        return args
+    }
+    return arrayOf("10", "10", "3")
 }
 

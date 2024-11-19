@@ -29,7 +29,7 @@ class MainGui {
         /**
          * Die Zeit einer Spiel-Runde (in Millisekunden)
          */
-        val tickDurationMs = 250.toLong()
+        val tickDurationMs = 350.toLong()
     }
 
     /**
