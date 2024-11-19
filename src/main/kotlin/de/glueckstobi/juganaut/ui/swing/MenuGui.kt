@@ -26,6 +26,8 @@ class MenuGui(playerX: Int, playerY: Int, diamondsInGame: Int ) : JFrame() {
 
         setContentPane(contentPane)
 
+        title = "Juganaut"
+
         defaultCloseOperation = DISPOSE_ON_CLOSE
         setSize(1024, 1000)
 
