@@ -1,5 +1,6 @@
 package de.glueckstobi.juganaut.ui.swing
 
+import com.adonax.audiocue.AudioCue
 import de.glueckstobi.juganaut.bl.Game
 import de.glueckstobi.juganaut.bl.World
 import de.glueckstobi.juganaut.bl.space.Coord
@@ -30,6 +31,15 @@ class MainGui {
          * Die Zeit einer Spiel-Runde (in Millisekunden)
          */
         val tickDurationMs = 350.toLong()
+
+        private var diamondSFX = Companion::class.java.getResource("/sound/collect_diamond.wav")
+
+        private var mainMusic = Companion::class.java.getResource("/sound/main_loop.wav")
+
+        var sfxAudioCue = AudioCue.makeStereoCue(diamondSFX, 4)
+
+        var musicAudioCue = AudioCue.makeStereoCue(mainMusic, 4)
+
     }
 
     /**
@@ -90,6 +100,8 @@ class MainGui {
     private var renderCycle: RenderCycle? = null
 
 
+
+
     /**
      * Startet das Spiel.
      */
@@ -98,6 +110,11 @@ class MainGui {
         val renderer = WorldRenderer(game.world)
         inputController = UserInputHandler(game)
         startRenderCycle(game)
+        sfxAudioCue.open()
+        musicAudioCue.open()
+        musicAudioCue.play()
+        musicAudioCue.setVolume(musicAudioCue.obtainInstance(), 0.1)
+        musicAudioCue.setLooping(musicAudioCue.obtainInstance(), -1)
         return showWindow(renderer)
     }
 
@@ -237,6 +254,8 @@ class MainGui {
             override fun windowClosed(e: WindowEvent?) {
                 super.windowClosed(e)
                 renderCycle?.clockStopped = true
+                sfxAudioCue.close()
+                musicAudioCue.close()
                 window.dispose()
             }
         })

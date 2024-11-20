@@ -1,8 +1,10 @@
 package de.glueckstobi.juganaut.bl
 
+import com.adonax.audiocue.AudioCue
 import de.glueckstobi.juganaut.bl.logic.GameOverReason
 import de.glueckstobi.juganaut.bl.logic.TurnController
 import de.glueckstobi.juganaut.bl.logic.WinningReason
+import de.glueckstobi.juganaut.ui.swing.MainGui
 import kotlin.system.exitProcess
 
 /**
@@ -35,6 +37,12 @@ class Game(val world: World, val diamondsInGame : Int) {
      * @param reason der Grund für das GameOver
      */
     fun gameOver(reason: GameOverReason) {
+        MainGui.sfxAudioCue = AudioCue.makeStereoCue(this.javaClass.getResource("/sound/lose_game.wav"), 4)
+        MainGui.sfxAudioCue.open()
+        MainGui.sfxAudioCue.play()
+        if (MainGui.musicAudioCue.getIsActive(MainGui.musicAudioCue.obtainInstance())) {
+            MainGui.musicAudioCue.close()
+        }
         gameOverReason = reason
     }
 
@@ -43,6 +51,12 @@ class Game(val world: World, val diamondsInGame : Int) {
      * @param reason der Grund für den Gewinn
      */
     fun win(reason: WinningReason) {
+        MainGui.sfxAudioCue = AudioCue.makeStereoCue(this.javaClass.getResource("/sound/win_game.wav"), 4)
+        MainGui.sfxAudioCue.open()
+        MainGui.sfxAudioCue.play()
+        if (MainGui.musicAudioCue.getIsActive(MainGui.musicAudioCue.obtainInstance())) {
+            MainGui.musicAudioCue.close()
+        }
         winningReason = reason
 
     }

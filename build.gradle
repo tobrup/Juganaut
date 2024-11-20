@@ -22,6 +22,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation 'com.jetbrains.intellij.java:java-gui-forms-rt:203.7148.30'
+    implementation 'com.adonax:audiocue:2.1.0'
 }
 
 test {

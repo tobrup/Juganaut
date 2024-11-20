@@ -5,6 +5,7 @@ import de.glueckstobi.juganaut.bl.space.Action
 import de.glueckstobi.juganaut.bl.space.Coord
 import de.glueckstobi.juganaut.bl.space.Direction
 import de.glueckstobi.juganaut.bl.worlditems.*
+import de.glueckstobi.juganaut.ui.swing.MainGui
 
 /**
  * Verarbeitet die Steuer-Kommandos des Spielers und
@@ -142,7 +143,7 @@ class PlayerController(val game: Game) {
         if (++game.diamondCount >= game.diamondsInGame) {
             game.win(AllDiamondsCollected(game.diamondCount))
         }
-
+        MainGui.sfxAudioCue.play()
     }
 
     /**

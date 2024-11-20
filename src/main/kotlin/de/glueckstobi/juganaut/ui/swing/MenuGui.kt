@@ -1,5 +1,6 @@
 package de.glueckstobi.juganaut.ui.swing
 
+
 import com.intellij.uiDesigner.core.GridConstraints
 import com.intellij.uiDesigner.core.GridLayoutManager
 import com.intellij.uiDesigner.core.Spacer
@@ -14,10 +15,10 @@ import javax.swing.text.StyleContext
 
 
 class MenuGui(playerX: Int, playerY: Int, diamondsInGame: Int ) : JFrame() {
-    private var contentPane: JPanel = JPanel(GridLayoutManager(4, 1, Insets(100,100,100,100), -1, -1))
+    private var contentPane: JPanel = JPanel()
     private var nameLabel: JLabel = JLabel("Juganaut", SwingConstants.CENTER)
     private var quitButton: JButton = JButton("QUIT")
-    private var buttonPane: JPanel = JPanel(GridLayoutManager(1, 2))
+    private var buttonPane: JPanel = JPanel()
     private var startButton: JButton = JButton("START")
 
 
