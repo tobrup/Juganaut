@@ -15,9 +15,12 @@ class TurnController(val game: Game) {
      * Wird einmal pro Runde aufgerufen, wenn die nächste Runde ausgeführt werden soll.
      */
     fun tick() {
-        playerController.applyPlayerInput()
-        rockController.rocksFall()
-        monsterController.monstersMove()
+        if (game.winningReason == null) {
+            playerController.applyPlayerInput()
+            rockController.rocksFall()
+            monsterController.monstersMove()
+        }
+        playerController.applyPlayerActions()
     }
 
 }

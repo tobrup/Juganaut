@@ -1,6 +1,7 @@
 # Juganaut
 
-![Game Screenshot](doc/juganaut-screenshot.png)
+![Game Screenshot](https://github.com/user-attachments/assets/0fb92e87-efd8-4a21-bd1f-7eaaec892102)
+
 
 A very simple 2D game for kids who want to learn programming without starting a project from scratch.
 
@@ -51,8 +52,8 @@ Das Spiel könnte ein paar neue Features vertragen:
 * Wäre gut, wenn der Spieler einen Stein verschieben könnte (falls im Feld dahinter Platz ist).
 Das ist reiner Teil der Spiel-Logik, kann also vollständig in der BL programmiert werden.
 
-* Man könnte noch Diamanten als neue Spiel-Elemente einführen, die der Spieler aufsammeln muss.
-Die Spiel-Elemente sind in `WorldItem.kt` definiert. Zusätzlich braucht man noch einen Renderer für die Anzeige (`WorldItemRenderer.kt`)
-und die entsprechende Logik in der BL, evtl auch eine Anzeige im Status-Label in `MainGui.kt`
+* Geräusche bzw. Musik wären noch nett
+
+* Für das Menü (definiert in `MenuGui` in der UI) könnte man noch ein schönes Hintergrundbild malen und einfügen
 
 * Wie wär's mit Bomben, die der Benutzer anzünden kann (z.B. mit `Enter`) und die dann nach 3 Runden explodieren?

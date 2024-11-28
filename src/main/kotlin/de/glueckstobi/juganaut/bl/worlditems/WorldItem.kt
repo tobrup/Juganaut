@@ -3,7 +3,7 @@ package de.glueckstobi.juganaut.bl.worlditems
 import de.glueckstobi.juganaut.bl.space.Direction
 
 /**
- * Die verschiedenen Elementen auf den Feldern des Spiels.
+ * Die verschiedenen Elemente auf den Feldern des Spiels.
  */
 sealed interface WorldItem
 
@@ -11,6 +11,11 @@ sealed interface WorldItem
  * Erde.
  */
 object Dirt : WorldItem
+
+/**
+ * Diamanten
+ */
+class Diamond : WorldItem
 
 /**
  * Ein leeres Feld

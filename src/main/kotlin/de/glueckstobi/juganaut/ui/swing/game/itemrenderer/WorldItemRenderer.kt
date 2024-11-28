@@ -19,6 +19,7 @@ interface WorldItemRenderer {
             return when (item) {
                 is Player -> StaticImageRenderer
                 is Rock -> StaticImageRenderer
+                is Diamond -> StaticImageRenderer
                 is Monster -> StaticImageRenderer
                 Dirt -> StaticImageRenderer
                 EmptyField -> null
@@ -33,7 +34,7 @@ interface WorldItemRenderer {
      * @param renderY die Y-Koordinate (vertikal) im Fenster, an der das Element gemalt werden soll
      * @param renderWidth die Breite, in der Spiel-Element gemalt werden soll
      * @param renderHeight die Höhe, in der Spiel-Element gemalt werden soll
-     * @param g ein Graphics-Objekt, das zum malen verwendet werden kann
+     * @param g ein Graphics-Objekt, das zum Malen verwendet werden kann
      * @param worldRenderer der WorldRenderer selbst (bietet Funktionen, um Bilder zu malen)
      *
      */

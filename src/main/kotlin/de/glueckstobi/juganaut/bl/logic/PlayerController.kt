@@ -1,9 +1,11 @@
 package de.glueckstobi.juganaut.bl.logic
 
 import de.glueckstobi.juganaut.bl.Game
+import de.glueckstobi.juganaut.bl.space.Action
 import de.glueckstobi.juganaut.bl.space.Coord
 import de.glueckstobi.juganaut.bl.space.Direction
 import de.glueckstobi.juganaut.bl.worlditems.*
+import de.glueckstobi.juganaut.ui.swing.MainGui
 
 /**
  * Verarbeitet die Steuer-Kommandos des Spielers und
@@ -38,7 +40,7 @@ class PlayerController(val game: Game) {
     }
 
     /**
-     * Wird gedrückt, wenn der Spieler die Taste wieder loslässt.
+     * Wird aufgerufen, wenn der Spieler die Taste wieder loslässt.
      */
     fun playerInputReleased() {
         playerInputPressed = false
@@ -66,8 +68,26 @@ class PlayerController(val game: Game) {
         playerInputProcessed = true
         when (currentInput) {
             is PlayerMovement -> tryMovePlayer(currentInput.direction)
+            is PlayerActions -> return
         }
     }
+    fun applyPlayerActions() {
+        val currentInput = playerInput
+        if (currentInput == null) {
+            return
+        }
+        if (!playerInputPressed) {
+            // key is not pressed and the input is pressed at least once (or the last time),
+            // so reset the input to null
+            playerInput = null
+        }
+        playerInputProcessed = true
+        when (currentInput) {
+            is PlayerMovement -> return
+            is PlayerActions -> processAction(currentInput.action)
+        }
+    }
+
 
 
     /**
@@ -88,8 +108,16 @@ class PlayerController(val game: Game) {
         when (destinationItem) {
             EmptyField, Dirt -> movePlayer(source, destination)
             is Monster -> moveIntoMonster(source, destination)
+            is Diamond -> moveIntoDiamond(source, destination)
             is Rock -> {} // can not move, do nothing
             is Player -> {} // player moves to itself? should not happen
+        }
+    }
+
+    private fun processAction(action: Action) {
+        when (action) {
+            Action.Quit -> game.quit()
+            Action.Restart -> game.restart()
         }
     }
 
@@ -105,7 +133,21 @@ class PlayerController(val game: Game) {
     }
 
     /**
-     * Bewegt den Spieler auf das Feld eines Monster
+     * Bewegt den Spieler auf das Feld eines Diamanten
+     * @param source Ursprungs-Koordinate
+     * @param destination Ziel-Koordinate
+     */
+    private fun moveIntoDiamond(source: Coord, destination: Coord) {
+        movePlayer(source, destination)
+        // Wenn der Spieler genauso viele Diamanten hat wie auf dem Spielfeld verteilt sind, dann ist das Spiel gewonnen
+        if (++game.diamondCount >= game.diamondsInGame) {
+            game.win(AllDiamondsCollected(game.diamondCount))
+        }
+        MainGui.sfxAudioCue.play()
+    }
+
+    /**
+     * Bewegt den Spieler auf das Feld eines Monsters
      * @param source Ursprungs-Koordinate
      * @param destination Ziel-Koordinate
      */

@@ -1,8 +1,10 @@
 package de.glueckstobi.juganaut.ui.swing.game
 
 import de.glueckstobi.juganaut.bl.Game
+import de.glueckstobi.juganaut.bl.logic.PlayerActions
 import de.glueckstobi.juganaut.bl.logic.PlayerInput
 import de.glueckstobi.juganaut.bl.logic.PlayerMovement
+import de.glueckstobi.juganaut.bl.space.Action
 import de.glueckstobi.juganaut.bl.space.Direction
 import java.awt.event.KeyEvent
 
@@ -36,6 +38,9 @@ class UserInputHandler(val game: Game) {
      * @param e Enthält Informationen über die Taste
      */
     private fun getPlayerInput(e: KeyEvent): PlayerInput? {
+        if (getDirection(e) == null) {
+            return getAction(e)?.let { PlayerActions(it) }
+        }
         return getDirection(e)?.let { PlayerMovement(it) }
     }
 
@@ -57,6 +62,14 @@ class UserInputHandler(val game: Game) {
             KeyEvent.VK_S -> Direction.Down
             KeyEvent.VK_D -> Direction.Right
 
+            else -> null
+        }
+    }
+
+    private fun getAction(e: KeyEvent): Action? {
+        return when (e.keyCode) {
+            KeyEvent.VK_Q -> Action.Quit
+            KeyEvent.VK_R -> Action.Restart
             else -> null
         }
     }
