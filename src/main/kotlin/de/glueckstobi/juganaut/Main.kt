@@ -1,6 +1,6 @@
 package de.glueckstobi.juganaut
 
-import de.glueckstobi.juganaut.ui.swing.MenuGui
+import de.glueckstobi.juganaut.ui.swing.MainGui
 
 
 fun main(args: Array<String>) {
@@ -9,8 +9,7 @@ fun main(args: Array<String>) {
     val playerY = providedArgs[1].toInt()
     val diamondsInGame = providedArgs[2].toInt()
     checkArgs(args)
-    val menuGui = MenuGui(playerX, playerY, diamondsInGame)
-    menuGui.isVisible = true
+    MainGui().showMenu(playerX, playerY, diamondsInGame)
 
 }
 

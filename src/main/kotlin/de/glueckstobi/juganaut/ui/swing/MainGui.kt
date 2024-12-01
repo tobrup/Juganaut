@@ -12,10 +12,8 @@ import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.Font
 import java.awt.GridLayout
-import java.awt.event.KeyAdapter
-import java.awt.event.KeyEvent
-import java.awt.event.WindowAdapter
-import java.awt.event.WindowEvent
+import java.awt.event.*
+import javax.imageio.ImageIO
 import javax.swing.*
 import kotlin.random.Random
 import kotlin.random.nextInt
@@ -32,11 +30,11 @@ class MainGui {
          */
         val tickDurationMs = 350.toLong()
 
-        private var diamondSFX = Companion::class.java.getResource("/sound/collect_diamond.wav")
+        private var collectDiamondSFX = Companion::class.java.getResource("/sound/collect_diamond.wav")
 
         private var mainMusic = Companion::class.java.getResource("/sound/main_loop.wav")
 
-        var sfxAudioCue = AudioCue.makeStereoCue(diamondSFX, 4)
+        var sfxAudioCue = AudioCue.makeStereoCue(collectDiamondSFX, 4)
 
         var musicAudioCue = AudioCue.makeStereoCue(mainMusic, 4)
 
@@ -97,7 +95,7 @@ class MainGui {
 
     private var inputController: UserInputHandler? = null
 
-    private var renderCycle: RenderCycle? = null
+    internal var renderCycle: RenderCycle? = null
 
 
 
@@ -105,7 +103,7 @@ class MainGui {
     /**
      * Startet das Spiel.
      */
-    fun startPlaying(playerX: Int, playerY: Int, diamondsInGame: Int): JFrame {
+    private fun startPlaying(playerX: Int, playerY: Int, diamondsInGame: Int): JPanel {
         val game = createGame(playerX, playerY, diamondsInGame)
         val renderer = WorldRenderer(game.world)
         inputController = UserInputHandler(game)
@@ -143,8 +141,11 @@ class MainGui {
      */
     private fun <T : WorldItem> createItems(world: World, itemCountRange: IntRange, playerX: Int, playerY: Int, itemFactory: () -> T) {
         val itemCount = Random.nextInt(itemCountRange)
-        (1..itemCount).forEach {
-            world.setField(Coord(getValidXCoordinate(world, playerX), getValidYCoordinate(world, playerY)), itemFactory())
+        repeat((1..itemCount).count()) {
+            world.setField(
+                Coord(getValidXCoordinate(world, playerX), getValidYCoordinate(world, playerY)),
+                itemFactory()
+            )
         }
     }
 
@@ -190,6 +191,7 @@ class MainGui {
         Thread(renderCycle, "TickThread").start()
     }
 
+
     /**
      * Wird für jede Spiel-Runde aufgerufen.
      * Führt die Spiel-Logik aus und zeichnet danach das Ergebnis neu.
@@ -217,10 +219,34 @@ class MainGui {
     }
 
 
+    fun showMenu(playerX: Int, playerY: Int, diamondsInGame: Int) {
+        val quitActionEvent = ActionListener { _ -> window.dispose() }
+        val startActionEvent = ActionListener { _ -> startPlaying(playerX, playerY, diamondsInGame) }
+        val menuGui = MenuGui(quitActionEvent, startActionEvent)
+        menuGui.quitButton.addActionListener { window.dispose() }
+        menuGui.startButton.addActionListener { startPlaying(playerX, playerY, diamondsInGame) }
+        window.contentPane = menuGui.contentPane
+        window.iconImage = ImageIO.read(this.javaClass.getResource("/textures/monster.png"))
+        window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE)
+        window.setSize(1024, 1000)
+
+        window.isVisible = true
+
+        window.contentPane.requestFocus()
+
+        window.addWindowListener(object : WindowAdapter() {
+            override fun windowClosed(e: WindowEvent?) {
+                super.windowClosed(e)
+                window.dispose()
+            }
+        })
+
+    }
+
     /**
      * Baut das Fenster auf und zeigt es an.
      */
-    private fun showWindow(renderer: WorldRenderer): JFrame {
+    private fun showWindow(renderer: WorldRenderer): JPanel {
         val contentPane = JPanel(BorderLayout())
         val statusPane = JPanel(GridLayout())
         val backgroundColor = Color.BLACK
@@ -236,14 +262,13 @@ class MainGui {
         diamondCountLabel.isOpaque = true
         diamondCountLabel.background = backgroundColor
         diamondCountLabel.horizontalAlignment = SwingConstants.RIGHT
-        diamondCountLabel.icon = ImageIcon(loadImage("/diamond.png"))
+        diamondCountLabel.icon = ImageIcon(loadImage("/textures/diamond.png"))
         diamondCountLabel.font = Font("Sans-Serif", Font.PLAIN, 30)
         diamondCountLabel.setHorizontalTextPosition(SwingConstants.LEFT)
 
         window.contentPane = contentPane
 
         window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE)
-        window.setSize(1024, 1000)
 
         window.isVisible = true
 
@@ -254,12 +279,16 @@ class MainGui {
             override fun windowClosed(e: WindowEvent?) {
                 super.windowClosed(e)
                 renderCycle?.clockStopped = true
-                sfxAudioCue.close()
-                musicAudioCue.close()
+                try {
+                    sfxAudioCue.close()
+                    musicAudioCue.close()
+                } catch (e: IllegalStateException) {
+                    System.err.println("Already closed AudioCue!")
+                }
                 window.dispose()
             }
         })
-        return window
+        return contentPane
     }
 
 

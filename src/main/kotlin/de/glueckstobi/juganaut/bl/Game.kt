@@ -37,7 +37,7 @@ class Game(val world: World, val diamondsInGame : Int) {
      * @param reason der Grund für das GameOver
      */
     fun gameOver(reason: GameOverReason) {
-        MainGui.sfxAudioCue = AudioCue.makeStereoCue(this.javaClass.getResource("/sound/lose_game.wav"), 4)
+        MainGui.sfxAudioCue = AudioCue.makeStereoCue(this.javaClass.getResource("/sound/lose_game1.wav"), 4)
         MainGui.sfxAudioCue.open()
         MainGui.sfxAudioCue.play()
         if (MainGui.musicAudioCue.getIsActive(MainGui.musicAudioCue.obtainInstance())) {

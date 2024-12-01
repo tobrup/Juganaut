@@ -4,55 +4,43 @@ package de.glueckstobi.juganaut.ui.swing
 import com.intellij.uiDesigner.core.GridConstraints
 import com.intellij.uiDesigner.core.GridLayoutManager
 import com.intellij.uiDesigner.core.Spacer
+import de.glueckstobi.juganaut.ui.swing.game.JPanelWithBackground
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.Font
 import java.awt.Insets
-import java.awt.event.ActionEvent
-import javax.swing.*
+import java.awt.event.ActionListener
+import javax.swing.JButton
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.SwingConstants
 import javax.swing.plaf.FontUIResource
 import javax.swing.text.StyleContext
 
 
-class MenuGui(playerX: Int, playerY: Int, diamondsInGame: Int ) : JFrame() {
-    private var contentPane: JPanel = JPanel()
-    private var nameLabel: JLabel = JLabel("Juganaut", SwingConstants.CENTER)
-    private var quitButton: JButton = JButton("QUIT")
-    private var buttonPane: JPanel = JPanel()
-    private var startButton: JButton = JButton("START")
+@Suppress("UNUSED_EXPRESSION")
+class MenuGui(quitEvent: ActionListener, startEvent: ActionListener) : JPanel() {
+    var contentPane: JPanelWithBackground = JPanelWithBackground(this.javaClass.getResource("/textures/menu-background.png"))
+    var nameLabel: JLabel = JLabel("Juganaut", SwingConstants.CENTER)
+    var quitButton: JButton = JButton("QUIT")
+    var buttonPane: JPanel = JPanel()
+    var startButton: JButton = JButton("START")
 
 
     init {
         setupUI()
-
-        setContentPane(contentPane)
-
-        title = "Juganaut"
-
-        defaultCloseOperation = DISPOSE_ON_CLOSE
-        setSize(1024, 1000)
-
-        isVisible = true
-
-        getContentPane().requestFocus()
-
-        quitButton.addActionListener { e: ActionEvent? -> dispose() }
-
-        startButton.addActionListener { e: ActionEvent? ->
-            dispose()
-            MainGui().startPlaying(playerX, playerY, diamondsInGame)
-        }
+        quitButton.addActionListener { quitEvent }
+        startButton.addActionListener { startEvent }
     }
 private fun setupUI() {
-    contentPane = JPanel()
     contentPane.layout = GridLayoutManager(4, 1, Insets(100, 100, 100, 100), -1, -1)
     contentPane.background = Color(-13618892)
     contentPane.foreground = Color(-12535550)
     contentPane.preferredSize = Dimension(1024, 700)
     nameLabel = JLabel()
-    val nameLabelFont = this.getFont("JetBrains Mono", Font.ITALIC, 48, nameLabel.font)
+    val nameLabelFont = this.getFont("Comic Sans MS", Font.ITALIC, 80, nameLabel.font)
     if (nameLabelFont != null) nameLabel.font = nameLabelFont
-    nameLabel.foreground = Color(-1446929)
+    nameLabel.foreground = Color(-13618892)
     nameLabel.horizontalAlignment = 0
     nameLabel.text = "Juganaut"
     nameLabel.isVisible = true
@@ -77,6 +65,7 @@ private fun setupUI() {
     buttonPane = JPanel()
     buttonPane.layout = GridLayoutManager(1, 2, Insets(0, 0, 0, 0), -1, -1)
     buttonPane.background = Color(-13618892)
+    buttonPane.isOpaque = false
     contentPane.add(
         buttonPane,
         GridConstraints(

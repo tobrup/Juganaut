@@ -1,11 +1,14 @@
 package de.glueckstobi.juganaut.bl.logic
 
+import com.adonax.audiocue.AudioCue
 import de.glueckstobi.juganaut.bl.Game
 import de.glueckstobi.juganaut.bl.space.Action
 import de.glueckstobi.juganaut.bl.space.Coord
 import de.glueckstobi.juganaut.bl.space.Direction
 import de.glueckstobi.juganaut.bl.worlditems.*
 import de.glueckstobi.juganaut.ui.swing.MainGui
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 /**
  * Verarbeitet die Steuer-Kommandos des Spielers und
@@ -106,12 +109,24 @@ class PlayerController(val game: Game) {
         }
         val destinationItem = game.world.getField(destination)
         when (destinationItem) {
-            EmptyField, Dirt -> movePlayer(source, destination)
+            EmptyField -> movePlayer(source, destination)
+            is Dirt -> movePlayerIntoDirt(source, destination)
             is Monster -> moveIntoMonster(source, destination)
             is Diamond -> moveIntoDiamond(source, destination)
             is Rock -> {} // can not move, do nothing
             is Player -> {} // player moves to itself? should not happen
         }
+    }
+
+    private fun movePlayerIntoDirt(source: Coord, destination: Coord) {
+        val player = game.world.getField(source)
+        game.world.setField(source, EmptyField)
+        game.world.setField(destination, player)
+        val crispSounds: Array<String> =
+            arrayOf( "/sound/crisp1.wav", "/sound/crisp2.wav", "/sound/crisp3.wav", "/sound/crisp4.wav" )
+        val sfxAudioCue = AudioCue.makeStereoCue(this.javaClass.getResource(crispSounds[Random.nextInt(0..3)]), 4)
+        sfxAudioCue.open()
+        sfxAudioCue.play(0.65)
     }
 
     private fun processAction(action: Action) {
